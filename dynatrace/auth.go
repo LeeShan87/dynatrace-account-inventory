@@ -5,7 +5,10 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"strings"
+
+	"github.com/joho/godotenv"
 )
 
 type DTAuthClient struct {
@@ -15,13 +18,32 @@ type DTAuthClient struct {
 	scopes   string
 	resource string
 }
+
+var (
+	account_api_url = "https://sso.dynatrace.com/sso/oauth2/token"
+	accountID       string
+	clientID        string
+	secret          string
+	scopes          string
+	resource        string
+)
+
+func init() {
+	_ = godotenv.Load()
+	clientID = os.Getenv("AOA_CLIENT")
+	secret = os.Getenv("AOA_SECRET")
+	scopes = os.Getenv("TOKEN_SCOPE")
+	accountID = os.Getenv("ACOUNT_ID")
+	resource = "urn:dtaccount:" + accountID
+}
+
 type AccessTokenResponse struct {
 	AccessToken string `json:"access_token"`
 }
 
-func NewDTAuthClient(url, clientID, secret, scopes, resource string) *DTAuthClient {
+func NewDTAuthClient() *DTAuthClient {
 	return &DTAuthClient{
-		url:      url,
+		url:      account_api_url,
 		clientID: clientID,
 		secret:   secret,
 		scopes:   scopes,

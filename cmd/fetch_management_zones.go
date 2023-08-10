@@ -9,31 +9,17 @@ import (
 	"github.com/LeeShan87/dynatrace-account-inventory/generated/account"
 	"github.com/LeeShan87/dynatrace-account-inventory/utils"
 
-	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 var (
-	url       = "https://sso.dynatrace.com/sso/oauth2/token"
-	apiURL    = "https://api.dynatrace.com"
-	accountID string
-	clientID  string
-	secret    string
-	scopes    string
-	resource  string
+	apiURL = "https://api.dynatrace.com"
 )
 
-func init() {
-	_ = godotenv.Load()
-	clientID = os.Getenv("AOA_CLIENT")
-	secret = os.Getenv("AOA_SECRET")
-	scopes = os.Getenv("TOKEN_SCOPE")
-	accountID = os.Getenv("ACOUNT_ID")
-	resource = "urn:dtaccount:" + accountID
-}
 func main() {
+	accountID := os.Getenv("ACOUNT_ID")
 	mongoURI := "mongodb://localhost:27017"
 	clientOptions := options.Client().ApplyURI(mongoURI)
 	client, err := mongo.Connect(context.Background(), clientOptions)
@@ -42,18 +28,12 @@ func main() {
 
 	db := client.Database("account_api")
 
-	authClient := auth.NewDTAuthClient(
-		url,
-		clientID,
-		secret,
-		scopes,
-		resource,
-	)
+	authClient := auth.NewDTAuthClient()
 	apiClient, err := auth.GetApiClient(*authClient, apiURL)
 	utils.CheckError(err)
 
 	// fetch tenants and management zones
-	environments, err := fetchEnvironments(apiClient)
+	environments, err := fetchEnvironments(apiClient, accountID)
 	utils.CheckError(err)
 	tenants, MZs, err := saveEnvironmentsInMongo(db, environments)
 	utils.CheckError(err)
@@ -61,7 +41,7 @@ func main() {
 	fmt.Println("Inserted ID:", len(MZs.InsertedIDs))
 }
 
-func fetchEnvironments(client *account.APIClient) (*account.EnvironmentResourceDto, error) {
+func fetchEnvironments(client *account.APIClient, accountID string) (*account.EnvironmentResourceDto, error) {
 	environments, _, err := client.EnvironmentManagementAPI.EnvironmentResourcesControllerGetEnvironmentResources(context.Background(), accountID).Execute()
 	return environments, err
 }
