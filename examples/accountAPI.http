@@ -1,0 +1,59 @@
+@ssoApi=https://sso.dynatrace.com/sso/oauth2/token
+@OClient={{$dotenv AOA_CLIENT}}
+@OSecret={{$dotenv AOA_SECRET}}
+# {{accountID}}
+@accountID={{$dotenv ACCOUNT_ID}}
+@OURN=urn:dtaccount:{{accountID}}
+
+@scope={{$dotenv TOKEN_SCOPE}}
+@apiUrl=https://api.dynatrace.com/iam/v1
+# {{authToken}}
+@authToken = {{login.response.body.access_token}}
+# {{authExpires}}
+@authExpires = {{login.response.body.expires_in}}
+
+# My variables
+@myEmail = {{$dotenv my_email}}
+@myGroup = {{$dotenv my_group}}
+
+###
+# @name login
+POST {{ssoApi}} HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=client_credentials
+&client_id={{OClient}}
+&client_secret={{OSecret}}
+&scope={{scope}}
+&resource={{OURN}}
+
+###
+# @name get users
+GET {{apiUrl}}/accounts/{{accountID}}/users?service-users=true&pageSize=1000 HTTP/1.1
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+###
+# @name get groups
+GET {{apiUrl}}/accounts/{{accountID}}/groups?pageSize=1000 HTTP/1.1
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+###
+# @name get my groups
+
+GET {{apiUrl}}/accounts/{{accountID}}/users/{{myEmail}} HTTP/1.1
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+###
+# @name get group members in my group
+GET {{apiUrl}}/accounts/{{accountID}}/groups/{{myGroup}}/users HTTP/1.1
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+###
+# @name get permissions in my group
+GET {{apiUrl}}/accounts/{{accountID}}/groups/{{myGroup}}/permissions HTTP/1.1
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
