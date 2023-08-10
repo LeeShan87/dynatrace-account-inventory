@@ -1,0 +1,4686 @@
+openapi: 3.0.0
+info:
+  contact: {}
+  description: The enterprise management API for Dynatrace SaaS enables automation
+    of operational tasks related to user access and environment lifecycle management.
+  title: Dynatrace Account Management API
+  version: "1.0"
+externalDocs:
+  description: JSON schema
+  url: /spec-json
+servers:
+- url: /
+paths:
+  /iam/v1/accounts/{accountUuid}/users:
+    get:
+      operationId: UsersController_getUsers
+      parameters:
+      - description: "The ID of the required account. \n\n You can find the UUID on\
+          \ the **Account > Account management API** page, during creation of an OAuth\
+          \ client."
+        explode: false
+        in: path
+        name: accountUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Specifies whether service users are included in results.
+        explode: true
+        in: query
+        name: service-users
+        required: false
+        schema:
+          type: boolean
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserListDto'
+          description: Success. The response contains the list of users.
+      security:
+      - bearer: []
+      summary: Lists all users of an account
+      tags:
+      - User management
+    post:
+      operationId: UsersController_createUserForAccount
+      parameters:
+      - description: "The ID of the required account. \n\n You can find the UUID on\
+          \ the **Account > Account management API** page, during creation of an OAuth\
+          \ client."
+        explode: false
+        in: path
+        name: accountUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserEmailDto'
+        description: The JSON body of the request. Contains the email address of the
+          new user.
+        required: true
+      responses:
+        "201":
+          description: Success. The new user has been created. Response doesn't have
+            a body.
+      security:
+      - bearer: []
+      summary: Creates a new user in an account
+      tags:
+      - User management
+  /iam/v1/accounts/{accountUuid}/users/{email}:
+    delete:
+      operationId: UsersController_removeUserFromAccount
+      parameters:
+      - description: "The ID of the required account. \n\n You can find the UUID on\
+          \ the **Account > Account management API** page, during creation of an OAuth\
+          \ client."
+        explode: false
+        in: path
+        name: accountUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The email address of the required user.
+        explode: false
+        in: path
+        name: email
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          description: Success. The user has been deleted. Response doesn't have a
+            body.
+      security:
+      - bearer: []
+      summary: Removes a user from an account
+      tags:
+      - User management
+    get:
+      operationId: UsersController_getUserGroups
+      parameters:
+      - description: "The ID of the required account. \n\n You can find the UUID on\
+          \ the **Account > Account management API** page, during creation of an OAuth\
+          \ client."
+        explode: false
+        in: path
+        name: accountUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The email address of the required user.
+        explode: false
+        in: path
+        name: email
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupUserDto'
+          description: Success. The response contains the groups of the user.
+      security:
+      - bearer: []
+      summary: Lists all groups of a user
+      tags:
+      - User management
+    post:
+      operationId: UsersController_addUserToGroups
+      parameters:
+      - description: "The ID of the required account. \n\n You can find the UUID on\
+          \ the **Account > Account management API** page, during creation of an OAuth\
+          \ client."
+        explode: false
+        in: path
+        name: accountUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The email address of the required user.
+        explode: false
+        in: path
+        name: email
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                type: string
+              type: array
+        description: "The body of the request. Contains a list of groups (specified\
+          \ by UUIDs) to which the user is to be added. \n\n Any existing group membership\
+          \ remains unaffected."
+        required: true
+      responses:
+        "201":
+          description: Success. The user has been added to the groups. Response doesn't
+            have a body.
+      security:
+      - bearer: []
+      summary: Adds a user to groups. Any existing group membership remains unaffected.
+      tags:
+      - User management
+  /iam/v1/accounts/{accountUuid}/users/{email}/groups:
+    delete:
+      operationId: UsersController_removeUserFromGroups
+      parameters:
+      - description: "The ID of the required account. \n\n You can find the UUID on\
+          \ the **Account > Account management API** page, during creation of an OAuth\
+          \ client."
+        explode: false
+        in: path
+        name: accountUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The email address of the required user.
+        explode: false
+        in: path
+        name: email
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "A list of groups the user is no longer a member of. \n\n To\
+          \ specify several groups, use the following format: `group-uuid=aaaaaa&group-uuid=bbbb`."
+        explode: true
+        in: query
+        name: group-uuid
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      responses:
+        "200":
+          description: Success. The user has been removed from groups. Response doesn't
+            have a body.
+      security:
+      - bearer: []
+      summary: Removes a user from groups
+      tags:
+      - User management
+    put:
+      operationId: UsersController_replaceUserGroups
+      parameters:
+      - description: "The ID of the required account. \n\n You can find the UUID on\
+          \ the **Account > Account management API** page, during creation of an OAuth\
+          \ client."
+        explode: false
+        in: path
+        name: accountUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The email address of the required user.
+        explode: false
+        in: path
+        name: email
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                type: string
+              type: array
+        description: "The body of the request. Contains a list of groups (specified\
+          \ by UUIDs) where the user is to be a member. \n\n The user will be removed\
+          \ from any group that is not specified here."
+        required: true
+      responses:
+        "200":
+          description: Success. The group membership has been set. Response doesn't
+            have a body.
+      security:
+      - bearer: []
+      summary: Sets group membership of a user. Any existing membership is overwritten.
+      tags:
+      - User management
+  /iam/v1/accounts/{accountUuid}/groups:
+    get:
+      operationId: GroupsController_getGroups
+      parameters:
+      - description: "The ID of the required account. \n\n You can find the UUID on\
+          \ the **Account > Account management API** page, during creation of an OAuth\
+          \ client."
+        explode: false
+        in: path
+        name: accountUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupListDto'
+          description: Success. The response contains the list of user groups.
+      security:
+      - bearer: []
+      summary: Lists all user groups of an account
+      tags:
+      - Group management
+    post:
+      operationId: GroupsController_createGroups
+      parameters:
+      - description: "The ID of the required account. \n\n You can find the UUID on\
+          \ the **Account > Account management API** page, during creation of an OAuth\
+          \ client."
+        explode: false
+        in: path
+        name: accountUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                $ref: '#/components/schemas/PutGroupDto'
+              type: array
+        description: "The body of the request. Contains a list of configurations for\
+          \ new groups. \n\n Do not specify a UUID. A UUID is assigned automatically\
+          \ by Dynatrace. "
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/GetGroupDto'
+                type: array
+          description: Success. The response contains descriptions of newly created
+            groups.
+      security:
+      - bearer: []
+      summary: Creates new user groups
+      tags:
+      - Group management
+  /iam/v1/accounts/{accountUuid}/groups/{groupUuid}/users:
+    get:
+      operationId: GroupsController_getUsersForGroup
+      parameters:
+      - description: "The ID of the required account. \n\n You can find the UUID on\
+          \ the **Account > Account management API** page, during creation of an OAuth\
+          \ client."
+        explode: false
+        in: path
+        name: accountUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The UUID of the required user group.
+        explode: false
+        in: path
+        name: groupUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupUserListDto'
+          description: Success. The response contains members of the group.
+      security:
+      - bearer: []
+      summary: Lists all members of a group
+      tags:
+      - Group management
+  /iam/v1/accounts/{accountUuid}/groups/{groupUuid}:
+    delete:
+      operationId: GroupsController_deleteGroup
+      parameters:
+      - description: "The ID of the required account. \n\n You can find the UUID on\
+          \ the **Account > Account management API** page, during creation of an OAuth\
+          \ client."
+        explode: false
+        in: path
+        name: accountUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The UUID of the required user group.
+        explode: false
+        in: path
+        name: groupUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          description: Success. The group has been deleted. The response doesn't have
+            a body.
+      security:
+      - bearer: []
+      summary: Deletes a user group
+      tags:
+      - Group management
+    put:
+      operationId: GroupsController_editGroup
+      parameters:
+      - description: "The ID of the required account. \n\n You can find the UUID on\
+          \ the **Account > Account management API** page, during creation of an OAuth\
+          \ client."
+        explode: false
+        in: path
+        name: accountUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The UUID of the required user group.
+        explode: false
+        in: path
+        name: groupUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PutGroupDto'
+        description: "The body of the request. Contains the updated parameters of\
+          \ the group. \n\n You can't change the UUID of the group."
+        required: true
+      responses:
+        "200":
+          description: Success. The group has been modified. The response doesn't
+            have a body.
+      security:
+      - bearer: []
+      summary: Edits a user group
+      tags:
+      - Group management
+  /iam/v1/accounts/{accountUuid}/groups/{groupUuid}/permissions:
+    delete:
+      operationId: PermissionsController_removeGroupPermissions
+      parameters:
+      - description: "The ID of the required account. \n\n You can find the UUID on\
+          \ the **Account > Account management API** page, during creation of an OAuth\
+          \ client."
+        explode: false
+        in: path
+        name: accountUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The UUID of the required user group.
+        explode: false
+        in: path
+        name: groupUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "The scope of the permission to be deleted. Depending on the\
+          \ type of the scope, specify one of the following: \n\n * `account`: The\
+          \ UUID of the account. \n* `tenant`: The ID of the environment. \n* `management-zone`:\
+          \ The ID of the management zone from an environment in `{environment-id}:{management-zone-id}`\
+          \ format."
+        explode: true
+        in: query
+        name: scope
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: The name of the permission to be deleted.
+        explode: true
+        in: query
+        name: permission-name
+        required: true
+        schema:
+          enum:
+          - account-company-info
+          - account-user-management
+          - account-viewer
+          - tenant-viewer
+          - tenant-manage-settings
+          - tenant-agent-install
+          - tenant-logviewer
+          - tenant-view-sensitive-request-data
+          - tenant-configure-request-capture-data
+          - tenant-replay-sessions-with-masking
+          - tenant-replay-sessions-without-masking
+          - tenant-manage-security-problems
+          - tenant-view-security-problems
+          - tenant-manage-support-tickets
+          type: string
+        style: form
+      - description: The scope type of the permission to be deleted.
+        explode: true
+        in: query
+        name: scope-type
+        required: true
+        schema:
+          enum:
+          - account
+          - tenant
+          - management-zone
+          type: string
+        style: form
+      responses:
+        "200":
+          description: Success. The permission has been deleted from the group.
+      security:
+      - bearer: []
+      summary: Removes a permission from a user group
+      tags:
+      - Permission management
+    get:
+      operationId: PermissionsController_getGroupPermissions
+      parameters:
+      - description: "The ID of the required account. \n\n You can find the UUID on\
+          \ the **Account > Account management API** page, during creation of an OAuth\
+          \ client."
+        explode: false
+        in: path
+        name: accountUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The UUID of the required user group.
+        explode: false
+        in: path
+        name: groupUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PermissionsGroupDto'
+          description: Success. The response contains permissions of the user group.
+      security:
+      - bearer: []
+      summary: Lists all permissions of a user group
+      tags:
+      - Permission management
+    post:
+      operationId: PermissionsController_addGroupPermissions
+      parameters:
+      - description: "The ID of the required account. \n\n You can find the UUID on\
+          \ the **Account > Account management API** page, during creation of an OAuth\
+          \ client."
+        explode: false
+        in: path
+        name: accountUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The UUID of the required user group.
+        explode: false
+        in: path
+        name: groupUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                $ref: '#/components/schemas/PermissionsDto'
+              type: array
+        description: "The body of the request. Contains a list of permissions to be\
+          \ assigned to the group. \n\nExisting permissions remain unaffected."
+        required: true
+      responses:
+        "201":
+          description: Success. Permissions have been assigned to the user group.
+            Response doesn't have a body.
+      security:
+      - bearer: []
+      summary: Assigns permissions to a user group. Existing permissions remain unaffected.
+      tags:
+      - Permission management
+    put:
+      operationId: PermissionsController_overwriteGroupPermissions
+      parameters:
+      - description: "The ID of the required account. \n\n You can find the UUID on\
+          \ the **Account > Account management API** page, during creation of an OAuth\
+          \ client."
+        explode: false
+        in: path
+        name: accountUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The UUID of the required user group.
+        explode: false
+        in: path
+        name: groupUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                $ref: '#/components/schemas/PermissionsDto'
+              type: array
+        description: "The body of the request. Contains a list of permissions to be\
+          \ assigned to the group. \n\n Existing permissions are overwritten."
+        required: true
+      responses:
+        "200":
+          description: Success. User group's permissions have been set. Response doesn't
+            have a body.
+      security:
+      - bearer: []
+      summary: Sets permissions of a user group. Existing permissions are overwritten.
+      tags:
+      - Permission management
+  /iam/v1/resolution/{levelType}/{levelId}/effectivepermissions:
+    get:
+      operationId: PolicyController_getEffectivePermissions
+      parameters:
+      - description: "The type of the [policy](https://dt-url.net/eu03uap) level.\
+          \ The following values are available: \n\n* `account`: An account policy\
+          \ applies to all environments of an account. \n* `environment`: An environment\
+          \ policy applies to a specific environment. \n\n Each level inherits the\
+          \ policies of the higher level and extends them with its own policies."
+        explode: false
+        in: path
+        name: levelType
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "The ID of the policy level. Use one of the following values,\
+          \ depending on the level type: \n\n* account: use the UUID of the account.\
+          \ \n* environment: use the ID of the environment."
+        explode: false
+        in: path
+        name: levelId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "Required entity type. The following values are available: \n\
+          \n* user \n* group"
+        explode: true
+        in: query
+        name: entityType
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: Required entity id.
+        explode: true
+        in: query
+        name: entityId
+        required: true
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: explain
+        required: true
+        schema:
+          type: boolean
+        style: form
+      - description: Optional services list. Policies for given services will be returned
+        explode: true
+        in: query
+        name: services;
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          type: number
+        style: form
+      - explode: true
+        in: query
+        name: size
+        required: false
+        schema:
+          type: number
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EffectivePermissions'
+          description: Successful response
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: Failed. The specified resource is not found.
+      security:
+      - bearer: []
+      summary: Gets effective permissions for a user or group | maturity=EARLY_ADOPTER
+      tags:
+      - Policy management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:effective-permissions:read
+  /iam/v1/repo/{levelType}/{levelId}/policies/aggregate:
+    get:
+      description: This endpoint is unavailable within global level
+      operationId: PolicyController_getPolicyOverviewList
+      parameters:
+      - description: "The type of the [policy](https://dt-url.net/eu03uap) level.\
+          \ The following values are available: \n\n* `global`: A global policy applies\
+          \ to all accounts and environments. It is defined and managed by Dynatrace.\
+          \ \n* `account`: An account policy applies to all environments of an account.\
+          \ \n* `environment`: An environment policy applies to a specific environment.\
+          \ \n\n Each level inherits the policies of the higher level and extends\
+          \ them with its own policies."
+        explode: false
+        in: path
+        name: levelType
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "The ID of the policy level. Use one of the following values,\
+          \ depending on the level type: \n\n* global: use the `global` value. \n\
+          * account: use the UUID of the account. \n* environment: use the ID of the\
+          \ environment."
+        explode: false
+        in: path
+        name: levelId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicyOverviewDtoList'
+          description: Success. The response contains the list of policies.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: Failed. The specified resource is not found.
+      security:
+      - bearer: []
+      summary: "Lists all policies for a level, including inherited from higher levels"
+      tags:
+      - Policy management
+      x-token-scopes:
+      - iam-policies-management
+  /iam/v1/repo/{levelType}/{levelId}/policies:
+    get:
+      operationId: PolicyController_getLevelPolicies
+      parameters:
+      - description: "The type of the [policy](https://dt-url.net/eu03uap) level.\
+          \ The following values are available: \n\n* `global`: A global policy applies\
+          \ to all accounts and environments. It is defined and managed by Dynatrace.\
+          \ \n* `account`: An account policy applies to all environments of an account.\
+          \ \n* `environment`: An environment policy applies to a specific environment.\
+          \ \n\n Each level inherits the policies of the higher level and extends\
+          \ them with its own policies."
+        explode: false
+        in: path
+        name: levelType
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "The ID of the policy level. Use one of the following values,\
+          \ depending on the level type: \n\n* global: use the `global` value. \n\
+          * account: use the UUID of the account. \n* environment: use the ID of the\
+          \ environment."
+        explode: false
+        in: path
+        name: levelId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Optional policy name. Only policies that are of equal name will
+          be returned.
+        explode: true
+        in: query
+        name: name
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicyDtoList'
+          description: Success. The response contains the list of policies.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: Failed. The specified resource is not found.
+      security:
+      - bearer: []
+      summary: Lists all native policies of a level
+      tags:
+      - Policy management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:policies:read
+    post:
+      description: This endpoint is unavailable within global level
+      operationId: PolicyController_createLevelPolicy
+      parameters:
+      - description: "The type of the [policy](https://dt-url.net/eu03uap) level.\
+          \ The following values are available: \n\n* `account`: An account policy\
+          \ applies to all environments of an account. \n* `environment`: An environment\
+          \ policy applies to a specific environment. \n\n Each level inherits the\
+          \ policies of the higher level and extends them with its own policies."
+        explode: false
+        in: path
+        name: levelType
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "The ID of the policy level. Use one of the following values,\
+          \ depending on the level type: \n\n* account: use the UUID of the account.\
+          \ \n* environment: use the ID of the environment."
+        explode: false
+        in: path
+        name: levelId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrUpdateLevelPolicyRequestDto'
+        description: The JSON body of the request. Contains the configuration of a
+          new policy.
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LevelPolicyDto'
+          description: Success. The policy has been created. The response contains
+            the configuration of the policy.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: Failed. The request is invalid
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: Failed. The specified resource is not found.
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: The specified response not found
+      security:
+      - bearer: []
+      summary: Creates a new policy
+      tags:
+      - Policy management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:policies:write
+  /iam/v1/repo/{levelType}/{levelId}/policies/validation:
+    post:
+      description: This endpoint is unavailable within global level
+      operationId: PolicyController_validateNewLevelPolicy
+      parameters:
+      - description: "The type of the [policy](https://dt-url.net/eu03uap) level.\
+          \ The following values are available: \n\n* `account`: An account policy\
+          \ applies to all environments of an account. \n* `environment`: An environment\
+          \ policy applies to a specific environment. \n\n Each level inherits the\
+          \ policies of the higher level and extends them with its own policies."
+        explode: false
+        in: path
+        name: levelType
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "The ID of the policy level. Use one of the following values,\
+          \ depending on the level type: \n\n* account: use the UUID of the account.\
+          \ \n* environment: use the ID of the environment."
+        explode: false
+        in: path
+        name: levelId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrUpdateLevelPolicyRequestDto'
+        description: The JSON body of the request. Contains the configuration of a
+          policy to be validated.
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationDto'
+          description: Success. The submitted policy is valid. Check the response
+            body for possible validation warnings.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: Failed. The request is invalid
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: Failed. The specified resource is not found.
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: The specified response not found
+      security:
+      - bearer: []
+      summary: "Validates the payload for the `POST /iam/v1/repo/{levelType}/{levelId}/policies`\
+        \ request"
+      tags:
+      - Policy management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:policies:read
+  /iam/v1/repo/{levelType}/{levelId}/policies/validation/{policyUuid}:
+    post:
+      description: This endpoint is unavailable within global level
+      operationId: PolicyController_validateLevelPolicy
+      parameters:
+      - description: "The type of the [policy](https://dt-url.net/eu03uap) level.\
+          \ The following values are available: \n\n* `account`: An account policy\
+          \ applies to all environments of an account. \n* `environment`: An environment\
+          \ policy applies to a specific environment. \n\n Each level inherits the\
+          \ policies of the higher level and extends them with its own policies."
+        explode: false
+        in: path
+        name: levelType
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "The ID of the policy level. Use one of the following values,\
+          \ depending on the level type: \n\n* account: use the UUID of the account.\
+          \ \n* environment: use the ID of the environment."
+        explode: false
+        in: path
+        name: levelId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The ID of the policy to be validated.
+        explode: false
+        in: path
+        name: policyUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrUpdateLevelPolicyRequestDto'
+        description: The JSON body of the request. Contains the configuration of a
+          policy to be validated.
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationDto'
+          description: Success. The submitted policy is valid. Check the response
+            body for possible validation warnings.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: Failed. The request is invalid
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: Failed. The specified resource is not found.
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: The specified response not found
+      security:
+      - bearer: []
+      summary: "Validates the payload for the `PUT /iam/v1/repo/{levelType}/{levelId}/policies/{policyUuid}`\
+        \ request"
+      tags:
+      - Policy management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:policies:read
+  /iam/v1/repo/{levelType}/{levelId}/policies/{policyUuid}:
+    delete:
+      description: This endpoint is unavailable within global level
+      operationId: PolicyController_deleteLevelPolicy
+      parameters:
+      - description: "The type of the [policy](https://dt-url.net/eu03uap) level.\
+          \ The following values are available: \n\n* `account`: An account policy\
+          \ applies to all environments of an account. \n* `environment`: An environment\
+          \ policy applies to a specific environment. \n\n Each level inherits the\
+          \ policies of the higher level and extends them with its own policies."
+        explode: false
+        in: path
+        name: levelType
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "The ID of the policy level. Use one of the following values,\
+          \ depending on the level type: \n\n* account: use the UUID of the account.\
+          \ \n* environment: use the ID of the environment."
+        explode: false
+        in: path
+        name: levelId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The ID of the required policy.
+        explode: false
+        in: path
+        name: policyUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Set to `true` to delete a policy that is still in use.
+        explode: false
+        in: path
+        name: force
+        required: true
+        schema:
+          type: boolean
+        style: simple
+      responses:
+        "204":
+          description: Success. The policy has been deleted. The response doesn't
+            have a body.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: Failed. The request is invalid
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: Failed. The specified resource is not found.
+      security:
+      - bearer: []
+      summary: Deletes a policy
+      tags:
+      - Policy management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:policies:write
+    get:
+      operationId: PolicyController_getLevelPolicy
+      parameters:
+      - description: "The type of the [policy](https://dt-url.net/eu03uap) level.\
+          \ The following values are available: \n\n* `global`: A global policy applies\
+          \ to all accounts and environments. It is defined and managed by Dynatrace.\
+          \ \n* `account`: An account policy applies to all environments of an account.\
+          \ \n* `environment`: An environment policy applies to a specific environment.\
+          \ \n\n Each level inherits the policies of the higher level and extends\
+          \ them with its own policies."
+        explode: false
+        in: path
+        name: levelType
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "The ID of the policy level. Use one of the following values,\
+          \ depending on the level type: \n\n* global: use the `global` value. \n\
+          * account: use the UUID of the account. \n* environment: use the ID of the\
+          \ environment."
+        explode: false
+        in: path
+        name: levelId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The ID of the required policy.
+        explode: false
+        in: path
+        name: policyUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LevelPolicyDto'
+          description: Success. The response contains the configuration of the policy.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: Failed. The specified resource is not found.
+      security:
+      - bearer: []
+      summary: Gets a policy
+      tags:
+      - Policy management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:policies:read
+    put:
+      description: |-
+        If the specified policy doesn't exist, a new one is created.
+        This endpoint is unavailable within global level
+      operationId: PolicyController_updateLevelPolicy
+      parameters:
+      - description: "The type of the [policy](https://dt-url.net/eu03uap) level.\
+          \ The following values are available: \n\n* `account`: An account policy\
+          \ applies to all environments of an account. \n* `environment`: An environment\
+          \ policy applies to a specific environment. \n\n Each level inherits the\
+          \ policies of the higher level and extends them with its own policies."
+        explode: false
+        in: path
+        name: levelType
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "The ID of the policy level. Use one of the following values,\
+          \ depending on the level type: \n\n* account: use the UUID of the account.\
+          \ \n* environment: use the ID of the environment."
+        explode: false
+        in: path
+        name: levelId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The ID of the required policy.
+        explode: false
+        in: path
+        name: policyUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrUpdateLevelPolicyRequestDto'
+        description: The JSON body of the request. Contains the updated configuration
+          of a policy.
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LevelPolicyDto'
+          description: Success. The policy has been created. The response contains
+            the configuration of the policy.
+        "204":
+          description: Success. The policy has been updated. The response doesn't
+            have a body.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: Failed. The request is invalid
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: Failed. The specified resource is not found.
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: The specified response not found
+      security:
+      - bearer: []
+      summary: Updates a policy
+      tags:
+      - Policy management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:policies:write
+  /iam/v1/repo/{levelType}/{levelId}/bindings/groups/{groupUuid}:
+    get:
+      operationId: PolicyController_getPolicyUuidsBindings
+      parameters:
+      - description: "The type of the [policy](https://dt-url.net/eu03uap) level.\
+          \ The following values are available: \n\n* `global`: A global policy applies\
+          \ to all accounts and environments. It is defined and managed by Dynatrace.\
+          \ \n* `account`: An account policy applies to all environments of an account.\
+          \ \n* `environment`: An environment policy applies to a specific environment.\
+          \ \n\n Each level inherits the policies of the higher level and extends\
+          \ them with its own policies."
+        explode: false
+        in: path
+        name: levelType
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "The ID of the policy level. Use one of the following values,\
+          \ depending on the level type: \n\n* global: use the `global` value. \n\
+          * account: use the UUID of the account. \n* environment: use the ID of the\
+          \ environment."
+        explode: false
+        in: path
+        name: levelId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The ID of the required user group.
+        explode: false
+        in: path
+        name: groupUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicyUuidsWithoutMetadataDto'
+          description: Success. The response contains the list of policies.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: Failed. The specified resource is not found.
+      security:
+      - bearer: []
+      summary: Lists all policies for a user group
+      tags:
+      - Policy management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:bindings:read
+    put:
+      description: |-
+        The request overwrites existing policies.
+        This endpoint is unavailable within global level
+      operationId: PolicyController_updatePolicyBindingsToGroup
+      parameters:
+      - description: "The type of the [policy](https://dt-url.net/eu03uap) level.\
+          \ The following values are available: \n\n* `global`: A global policy applies\
+          \ to all accounts and environments. It is defined and managed by Dynatrace.\
+          \ \n* `account`: An account policy applies to all environments of an account.\
+          \ \n* `environment`: An environment policy applies to a specific environment.\
+          \ \n\n Each level inherits the policies of the higher level and extends\
+          \ them with its own policies."
+        explode: false
+        in: path
+        name: levelType
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "The ID of the policy level. Use one of the following values,\
+          \ depending on the level type: \n\n* global: use the `global` value. \n\
+          * account: use the UUID of the account. \n* environment: use the ID of the\
+          \ environment."
+        explode: false
+        in: path
+        name: levelId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The ID of the required user group.
+        explode: false
+        in: path
+        name: groupUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PolicyUuidsDto'
+        description: "The JSON body of the request. Contains new policies for the\
+          \ group. \n\n Any policy not presented in the request is discarded."
+        required: true
+      responses:
+        "204":
+          description: Success. The group policies have been updated. The response
+            doesn't have a body.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: Failed. The request is invalid
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: Failed. The specified resource is not found.
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: The specified response not found
+      security:
+      - bearer: []
+      summary: Updates policies for a user group
+      tags:
+      - Policy management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:bindings:write
+  /iam/v1/repo/{levelType}/{levelId}/bindings:
+    delete:
+      description: This endpoint is unavailable within global level
+      operationId: PolicyController_deleteLevelPolicyBindings
+      parameters:
+      - description: "The type of the [policy](https://dt-url.net/eu03uap) level.\
+          \ The following values are available: \n\n* `global`: A global policy applies\
+          \ to all accounts and environments. It is defined and managed by Dynatrace.\
+          \ \n* `account`: An account policy applies to all environments of an account.\
+          \ \n* `environment`: An environment policy applies to a specific environment.\
+          \ \n\n Each level inherits the policies of the higher level and extends\
+          \ them with its own policies."
+        explode: false
+        in: path
+        name: levelType
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "The ID of the policy level. Use one of the following values,\
+          \ depending on the level type: \n\n* global: use the `global` value. \n\
+          * account: use the UUID of the account. \n* environment: use the ID of the\
+          \ environment."
+        explode: false
+        in: path
+        name: levelId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Success. Policy bindings have been deleted. The response doesn't
+            have a body.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: Failed. The request is invalid
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: Failed. The specified resource is not found.
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: The specified response not found
+      security:
+      - bearer: []
+      summary: Deletes all policy bindings from a level
+      tags:
+      - Policy management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:bindings:write
+    get:
+      description: A policy binding shows which user groups use the policy.
+      operationId: PolicyController_getAllLevelPoliciesBindings
+      parameters:
+      - description: "The type of the [policy](https://dt-url.net/eu03uap) level.\
+          \ The following values are available: \n\n* `global`: A global policy applies\
+          \ to all accounts and environments. It is defined and managed by Dynatrace.\
+          \ \n* `account`: An account policy applies to all environments of an account.\
+          \ \n* `environment`: An environment policy applies to a specific environment.\
+          \ \n\n Each level inherits the policies of the higher level and extends\
+          \ them with its own policies."
+        explode: false
+        in: path
+        name: levelType
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "The ID of the policy level. Use one of the following values,\
+          \ depending on the level type: \n\n* global: use the `global` value. \n\
+          * account: use the UUID of the account. \n* environment: use the ID of the\
+          \ environment."
+        explode: false
+        in: path
+        name: levelId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LevelPolicyBindingDto'
+          description: Success. The response contains bindings of the level policies.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: Failed. The specified resource is not found.
+      security:
+      - bearer: []
+      summary: Lists all policy bindings of a level
+      tags:
+      - Policy management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:bindings:read
+    put:
+      description: |-
+        The request overwrites all existing bindings.
+         This endpoint is unavailable within global level
+      operationId: PolicyController_updateLevelPolicyBindings
+      parameters:
+      - description: "The type of the [policy](https://dt-url.net/eu03uap) level.\
+          \ The following values are available: \n\n* `global`: A global policy applies\
+          \ to all accounts and environments. It is defined and managed by Dynatrace.\
+          \ \n* `account`: An account policy applies to all environments of an account.\
+          \ \n* `environment`: An environment policy applies to a specific environment.\
+          \ \n\n Each level inherits the policies of the higher level and extends\
+          \ them with its own policies."
+        explode: false
+        in: path
+        name: levelType
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "The ID of the policy level. Use one of the following values,\
+          \ depending on the level type: \n\n* global: use the `global` value. \n\
+          * account: use the UUID of the account. \n* environment: use the ID of the\
+          \ environment."
+        explode: false
+        in: path
+        name: levelId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateLevelPolicyBindingsRequestDto'
+        description: "The JSON body of the request. Contains new policy bindings of\
+          \ a level. \n\n Any existing binding not presented in the request is discarded."
+        required: true
+      responses:
+        "204":
+          description: Success. The binding policies have been updated. The response
+            doesn't have a body.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: Failed. The request is invalid
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: Failed. The specified resource is not found.
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: The specified response not found
+      security:
+      - bearer: []
+      summary: Updates policy bindings of a level
+      tags:
+      - Policy management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:bindings:write
+  /iam/v1/repo/{levelType}/{levelId}/bindings/{policyUuid}:
+    delete:
+      description: This endpoint is unavailable within global level
+      operationId: PolicyController_deleteLevelPolicyBindingsForPolicy
+      parameters:
+      - description: "The type of the [policy](https://dt-url.net/eu03uap) level.\
+          \ The following values are available: \n\n* `global`: A global policy applies\
+          \ to all accounts and environments. It is defined and managed by Dynatrace.\
+          \ \n* `account`: An account policy applies to all environments of an account.\
+          \ \n* `environment`: An environment policy applies to a specific environment.\
+          \ \n\n Each level inherits the policies of the higher level and extends\
+          \ them with its own policies."
+        explode: false
+        in: path
+        name: levelType
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "The ID of the policy level. Use one of the following values,\
+          \ depending on the level type: \n\n* global: use the `global` value. \n\
+          * account: use the UUID of the account. \n* environment: use the ID of the\
+          \ environment."
+        explode: false
+        in: path
+        name: levelId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The ID of the required policy.
+        explode: false
+        in: path
+        name: policyUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Forces multiple in case delete by parameters and metadata query
+        explode: true
+        in: query
+        name: forceMultiple
+        required: true
+        schema:
+          type: boolean
+        style: form
+      responses:
+        "204":
+          description: Success. Policy binding has been deleted. The response doesn't
+            have a body.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: Failed. The request is invalid
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: Failed. The specified resource is not found.
+      security:
+      - bearer: []
+      summary: Deletes all bindings of a policy
+      tags:
+      - Policy management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:bindings:write
+    get:
+      description: This endpoint is unavailable within global level
+      operationId: PolicyController_getLevelPolicyBindings
+      parameters:
+      - description: "The type of the [policy](https://dt-url.net/eu03uap) level.\
+          \ The following values are available: \n\n* `global`: A global policy applies\
+          \ to all accounts and environments. It is defined and managed by Dynatrace.\
+          \ \n* `account`: An account policy applies to all environments of an account.\
+          \ \n* `environment`: An environment policy applies to a specific environment.\
+          \ \n\n Each level inherits the policies of the higher level and extends\
+          \ them with its own policies."
+        explode: false
+        in: path
+        name: levelType
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "The ID of the policy level. Use one of the following values,\
+          \ depending on the level type: \n\n* global: use the `global` value. \n\
+          * account: use the UUID of the account. \n* environment: use the ID of the\
+          \ environment."
+        explode: false
+        in: path
+        name: levelId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The ID of the required policy.
+        explode: false
+        in: path
+        name: policyUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          description: Successful response - list of policy bindings with parameters
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: Failed. The specified resource is not found.
+      security:
+      - bearer: []
+      summary: Get policy bindings within a level
+      tags:
+      - Policy management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:bindings:read
+    post:
+      description: |-
+        Existing bindings remain unaffected.
+        This endpoint is unavailable within global level
+      operationId: PolicyController_appendLevelPolicyBindings
+      parameters:
+      - description: "The type of the [policy](https://dt-url.net/eu03uap) level.\
+          \ The following values are available: \n\n* `global`: A global policy applies\
+          \ to all accounts and environments. It is defined and managed by Dynatrace.\
+          \ \n* `account`: An account policy applies to all environments of an account.\
+          \ \n* `environment`: An environment policy applies to a specific environment.\
+          \ \n\n Each level inherits the policies of the higher level and extends\
+          \ them with its own policies."
+        explode: false
+        in: path
+        name: levelType
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "The ID of the policy level. Use one of the following values,\
+          \ depending on the level type: \n\n* global: use the `global` value. \n\
+          * account: use the UUID of the account. \n* environment: use the ID of the\
+          \ environment."
+        explode: false
+        in: path
+        name: levelId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The ID of the required policy.
+        explode: false
+        in: path
+        name: policyUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppendLevelPolicyBindingsRequestDto'
+        description: The JSON body of the request. Contains user groups that must
+          use the policy.
+        required: true
+      responses:
+        "204":
+          description: Success. Policy bindings created.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: Failed. The request is invalid
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: Failed. The specified resource is not found.
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: The specified response not found
+      security:
+      - bearer: []
+      summary: Adds policy bindings to a level
+      tags:
+      - Policy management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:bindings:write
+  /iam/v1/repo/{levelType}/{levelId}/bindings/descendants/{policyUuid}:
+    get:
+      description: This endpoint is unavailable within global level
+      operationId: PolicyController_getLevelDescendantsPolicyBindings
+      parameters:
+      - description: "The type of the [policy](https://dt-url.net/eu03uap) level.\
+          \ The following values are available: \n\n* `account`: An account policy\
+          \ applies to all environments of an account. \n\nEach level inherits the\
+          \ policies of the higher level and extends them with its own policies."
+        explode: false
+        in: path
+        name: levelType
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "The ID of the policy level. Use one of the following values,\
+          \ depending on the level type: \n\n* global: use the `global` value. \n\
+          * account: use the UUID of the account. \n* environment: use the ID of the\
+          \ environment."
+        explode: false
+        in: path
+        name: levelId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The ID of the required policy.
+        explode: false
+        in: path
+        name: policyUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          type: number
+        style: form
+      - explode: true
+        in: query
+        name: size
+        required: false
+        schema:
+          type: number
+        style: form
+      responses:
+        "200":
+          description: Successful response - list of policy bindings with parameters
+            for all descendants of given account level
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: Failed. The specified resource is not found.
+      security:
+      - bearer: []
+      summary: Get policy bindings within descendants of a level
+      tags:
+      - Policy management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:bindings:read
+  /iam/v1/repo/{levelType}/{levelId}/bindings/{policyUuid}/{groupUuid}:
+    delete:
+      description: This endpoint is unavailable within global level
+      operationId: PolicyController_deleteLevelPolicyBindingsForPolicyAndGroup
+      parameters:
+      - description: "The type of the [policy](https://dt-url.net/eu03uap) level.\
+          \ The following values are available: \n\n* `global`: A global policy applies\
+          \ to all accounts and environments. It is defined and managed by Dynatrace.\
+          \ \n* `account`: An account policy applies to all environments of an account.\
+          \ \n* `environment`: An environment policy applies to a specific environment.\
+          \ \n\n Each level inherits the policies of the higher level and extends\
+          \ them with its own policies."
+        explode: false
+        in: path
+        name: levelType
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "The ID of the policy level. Use one of the following values,\
+          \ depending on the level type: \n\n* global: use the `global` value. \n\
+          * account: use the UUID of the account. \n* environment: use the ID of the\
+          \ environment."
+        explode: false
+        in: path
+        name: levelId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The ID of the required policy.
+        explode: false
+        in: path
+        name: policyUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The ID of the required user group.
+        explode: false
+        in: path
+        name: groupUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Forces multiple in case delete by parameters and metadata query
+        explode: false
+        in: path
+        name: forceMultiple
+        required: true
+        schema:
+          type: boolean
+        style: simple
+      responses:
+        "204":
+          description: Success. Policy binding has been deleted. The response doesn't
+            have a body.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: Failed. The request is invalid
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: Failed. The specified resource is not found.
+      security:
+      - bearer: []
+      summary: Deletes a policy binding from a user group
+      tags:
+      - Policy management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:bindings:write
+    get:
+      description: This endpoint is unavailable within global level
+      operationId: PolicyController_getLevelPolicyBindingsForGroup
+      parameters:
+      - description: "The type of the [policy](https://dt-url.net/eu03uap) level.\
+          \ The following values are available: \n\n* `global`: A global policy applies\
+          \ to all accounts and environments. It is defined and managed by Dynatrace.\
+          \ \n* `account`: An account policy applies to all environments of an account.\
+          \ \n* `environment`: An environment policy applies to a specific environment.\
+          \ \n\n Each level inherits the policies of the higher level and extends\
+          \ them with its own policies."
+        explode: false
+        in: path
+        name: levelType
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "The ID of the policy level. Use one of the following values,\
+          \ depending on the level type: \n\n* global: use the `global` value. \n\
+          * account: use the UUID of the account. \n* environment: use the ID of the\
+          \ environment."
+        explode: false
+        in: path
+        name: levelId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The ID of the required policy.
+        explode: false
+        in: path
+        name: policyUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The ID of the required user group.
+        explode: false
+        in: path
+        name: groupUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          description: Successful response - list of policy bindings with parameters
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: Failed. The specified resource is not found.
+      security:
+      - bearer: []
+      summary: Get policy bindings within a level
+      tags:
+      - Policy management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:bindings:read
+    post:
+      description: This endpoint is unavailable within global level
+      operationId: PolicyController_appendParticularGroupBinding
+      parameters:
+      - description: "The type of the [policy](https://dt-url.net/eu03uap) level.\
+          \ The following values are available: \n\n* `global`: A global policy applies\
+          \ to all accounts and environments. It is defined and managed by Dynatrace.\
+          \ \n* `account`: An account policy applies to all environments of an account.\
+          \ \n* `environment`: An environment policy applies to a specific environment.\
+          \ \n\n Each level inherits the policies of the higher level and extends\
+          \ them with its own policies."
+        explode: false
+        in: path
+        name: levelType
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "The ID of the policy level. Use one of the following values,\
+          \ depending on the level type: \n\n* global: use the `global` value. \n\
+          * account: use the UUID of the account. \n* environment: use the ID of the\
+          \ environment."
+        explode: false
+        in: path
+        name: levelId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The ID of the required policy.
+        explode: false
+        in: path
+        name: policyUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The ID of the required user group.
+        explode: false
+        in: path
+        name: groupUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppendLevelPolicyBindingForGroupDto'
+        description: The JSON body of the request. Contains parameters and metadata
+        required: true
+      responses:
+        "204":
+          description: Success. Policy bindings created.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: Failed. The request is invalid
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: Failed. The specified resource is not found.
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+          description: The specified response not found
+      security:
+      - bearer: []
+      summary: Append policy bindings within a level for a user group
+      tags:
+      - Policy management
+      x-token-scopes:
+      - iam-policies-management
+      - iam:bindings:write
+  /iam/v1/accounts/{accountUuid}/service-users:
+    get:
+      operationId: ServiceUsersController_getServiceUsersFromAccount
+      parameters:
+      - description: "The ID of the required account. \n\n You can find the UUID on\
+          \ the **Account > Account management API** page, during creation of an OAuth\
+          \ client."
+        explode: false
+        in: path
+        name: accountUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalServiceUsersPageDto'
+          description: Success. Service users assigned to account fetched successfully.
+      security:
+      - bearer: []
+      summary: Get service users assigned to account
+      tags:
+      - Service user management
+    post:
+      operationId: ServiceUsersController_createServiceUserForAccount
+      parameters:
+      - description: "The ID of the required account. \n\n You can find the UUID on\
+          \ the **Account > Account management API** page, during creation of an OAuth\
+          \ client."
+        explode: false
+        in: path
+        name: accountUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceUserNameDto'
+        description: The JSON body of the request. Contains the name of the new service
+          user.
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceUserUuidDto'
+          description: Success. The new service user has been created. The response
+            contains the uuid of the new service user.
+      security:
+      - bearer: []
+      summary: Creates a new service user in an account
+      tags:
+      - Service user management
+  /iam/v1/accounts/{accountUuid}/service-users/{userUuid}:
+    delete:
+      operationId: ServiceUsersController_deleteUser
+      parameters:
+      - description: "The ID of the required account. \n\n You can find the UUID on\
+          \ the **Account > Account management API** page, during creation of an OAuth\
+          \ client."
+        explode: false
+        in: path
+        name: accountUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The UUID of the required user.
+        explode: false
+        in: path
+        name: userUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          description: Success. The user has been deleted. Response doesn't have a
+            body.
+      security:
+      - bearer: []
+      summary: Removes service user
+      tags:
+      - Service user management
+  /env/v1/accounts/{accountUuid}/environments:
+    get:
+      operationId: EnvironmentResourcesController_getEnvironmentResources
+      parameters:
+      - description: "The ID of the required account. \n\n You can find the UUID on\
+          \ the **Account > Account management API** page, during creation of an OAuth\
+          \ client."
+        explode: false
+        in: path
+        name: accountUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentResourceDto'
+          description: Success. The response contains a list of the account's environments.
+      security:
+      - bearer: []
+      summary: Lists all environments and management zones of an account
+      tags:
+      - Environment management
+  /sub/v2/accounts/{accountUuid}/subscriptions:
+    get:
+      operationId: SubscriptionsController_listSubscriptions
+      parameters:
+      - description: "The ID of the required account. \n\n You can find the UUID on\
+          \ the **Account > Account management API** page, during creation of an OAuth\
+          \ client."
+        explode: false
+        in: path
+        name: accountUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionListDto'
+          description: Success. The response contains a list of the account's subscriptions.
+        "400":
+          description: "The request was unacceptable, often due to missing a required\
+            \ parameter"
+        "401":
+          description: The bearer token is incorrect/expired or the requested account
+            information does not match the bearer token
+        "403":
+          description: Access denied
+        "404":
+          description: The requested resource was not found
+        "500":
+          description: Something went wrong on Account Management API's end
+      security:
+      - bearer: []
+      summary: Get list of subscriptions by account uuid
+      tags:
+      - Dynatrace Platform Subscription
+  /sub/v2/accounts/{accountUuid}/subscriptions/events:
+    get:
+      operationId: SubscriptionsController_getEvents
+      parameters:
+      - description: "The ID of the required account. \n\n You can find the UUID on\
+          \ the **Account > Account management API** page, during creation of an OAuth\
+          \ client."
+        explode: false
+        in: path
+        name: accountUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Date as ISO string
+        explode: true
+        in: query
+        name: startTime
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: Date as ISO string
+        explode: true
+        in: query
+        name: endTime
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: eventType
+        required: false
+        schema:
+          enum:
+          - cost
+          - forecast
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Event'
+                type: array
+          description: ""
+        "400":
+          description: "The request was unacceptable, often due to missing a required\
+            \ parameter"
+        "401":
+          description: The bearer token is incorrect/expired or the requested account
+            information does not match the bearer token
+        "403":
+          description: Access denied
+        "404":
+          description: The requested resource was not found
+        "500":
+          description: Something went wrong on Account Management API's end
+      security:
+      - bearer: []
+      summary: Get all notification events for a given subscription
+      tags:
+      - Dynatrace Platform Subscription
+  /sub/v2/accounts/{accountUuid}/subscriptions/forecast:
+    get:
+      operationId: SubscriptionsController_getForecast
+      parameters:
+      - description: "The ID of the required account. \n\n You can find the UUID on\
+          \ the **Account > Account management API** page, during creation of an OAuth\
+          \ client."
+        explode: false
+        in: path
+        name: accountUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forecast'
+          description: ""
+        "400":
+          description: "The request was unacceptable, often due to missing a required\
+            \ parameter"
+        "401":
+          description: The bearer token is incorrect/expired or the requested account
+            information does not match the bearer token
+        "403":
+          description: Access denied
+        "404":
+          description: The requested resource was not found
+        "500":
+          description: Something went wrong on Account Management API's end
+      security:
+      - bearer: []
+      summary: Get forecast snapshot for a given account
+      tags:
+      - Dynatrace Platform Subscription
+  /sub/v2/accounts/{accountUuid}/subscriptions/{subscriptionUuid}:
+    get:
+      operationId: SubscriptionsController_getSubscription
+      parameters:
+      - description: "The ID of the required account. \n\n You can find the UUID on\
+          \ the **Account > Account management API** page, during creation of an OAuth\
+          \ client."
+        explode: false
+        in: path
+        name: accountUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The UUID of the requested subscription
+        explode: false
+        in: path
+        name: subscriptionUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionDto'
+          description: ""
+        "400":
+          description: "The request was unacceptable, often due to missing a required\
+            \ parameter"
+        "401":
+          description: The bearer token is incorrect/expired or the requested account
+            information does not match the bearer token
+        "403":
+          description: Access denied
+        "404":
+          description: The requested resource was not found
+        "500":
+          description: Something went wrong on Account Management API's end
+      security:
+      - bearer: []
+      summary: Get specific subscription by uuid
+      tags:
+      - Dynatrace Platform Subscription
+  /sub/v2/accounts/{accountUuid}/subscriptions/{subscriptionUuid}/environments/usage:
+    get:
+      operationId: SubscriptionsController_getEnvironmentUsage
+      parameters:
+      - description: "The ID of the required account. \n\n You can find the UUID on\
+          \ the **Account > Account management API** page, during creation of an OAuth\
+          \ client."
+        explode: false
+        in: path
+        name: accountUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The UUID of the requested subscription
+        explode: false
+        in: path
+        name: subscriptionUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Date as ISO string
+        explode: true
+        in: query
+        name: startTime
+        required: true
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: Date as ISO string
+        explode: true
+        in: query
+        name: endTime
+        required: true
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: environmentIds
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - explode: true
+        in: query
+        name: capabilityKeys
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionEnvironmentUsageListDto'
+          description: ""
+        "400":
+          description: "The request was unacceptable, often due to missing a required\
+            \ parameter"
+        "401":
+          description: The bearer token is incorrect/expired or the requested account
+            information does not match the bearer token
+        "403":
+          description: Access denied
+        "404":
+          description: The requested resource was not found
+        "500":
+          description: Something went wrong on Account Management API's end
+      security:
+      - bearer: []
+      summary: Get usage summary grouped by environment for a given subscription
+      tags:
+      - Dynatrace Platform Subscription
+  /sub/v2/accounts/{accountUuid}/subscriptions/{subscriptionUuid}/usage:
+    get:
+      operationId: SubscriptionsController_getTotalSubscriptionUsage
+      parameters:
+      - description: "The ID of the required account. \n\n You can find the UUID on\
+          \ the **Account > Account management API** page, during creation of an OAuth\
+          \ client."
+        explode: false
+        in: path
+        name: accountUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The UUID of the requested subscription
+        explode: false
+        in: path
+        name: subscriptionUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: environmentIds
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - explode: true
+        in: query
+        name: capabilityKeys
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionUsageListDto'
+          description: ""
+        "400":
+          description: "The request was unacceptable, often due to missing a required\
+            \ parameter"
+        "401":
+          description: The bearer token is incorrect/expired or the requested account
+            information does not match the bearer token
+        "403":
+          description: Access denied
+        "404":
+          description: The requested resource was not found
+        "500":
+          description: Something went wrong on Account Management API's end
+      security:
+      - bearer: []
+      summary: Get aggregated usage data grouped by date for a given subscription
+      tags:
+      - Dynatrace Platform Subscription
+  /sub/v2/accounts/{accountUuid}/subscriptions/{subscriptionUuid}/cost:
+    get:
+      operationId: SubscriptionsController_getTotalSubscriptionCost
+      parameters:
+      - description: "The ID of the required account. \n\n You can find the UUID on\
+          \ the **Account > Account management API** page, during creation of an OAuth\
+          \ client."
+        explode: false
+        in: path
+        name: accountUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The UUID of the requested subscription
+        explode: false
+        in: path
+        name: subscriptionUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: environmentIds
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - explode: true
+        in: query
+        name: capabilityKeys
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionCostListDto'
+          description: ""
+        "400":
+          description: "The request was unacceptable, often due to missing a required\
+            \ parameter"
+        "401":
+          description: The bearer token is incorrect/expired or the requested account
+            information does not match the bearer token
+        "403":
+          description: Access denied
+        "404":
+          description: The requested resource was not found
+        "500":
+          description: Something went wrong on Account Management API's end
+      security:
+      - bearer: []
+      summary: Get aggregated cost data grouped by date for a given subscription
+      tags:
+      - Dynatrace Platform Subscription
+  /sub/v2/accounts/{accountUuid}/subscriptions/{subscriptionUuid}/environments/cost:
+    get:
+      operationId: SubscriptionsController_getEnvironmentCost
+      parameters:
+      - description: "The ID of the required account. \n\n You can find the UUID on\
+          \ the **Account > Account management API** page, during creation of an OAuth\
+          \ client."
+        explode: false
+        in: path
+        name: accountUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The UUID of the requested subscription
+        explode: false
+        in: path
+        name: subscriptionUuid
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Date as ISO string
+        explode: true
+        in: query
+        name: startTime
+        required: true
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: Date as ISO string
+        explode: true
+        in: query
+        name: endTime
+        required: true
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: environmentIds
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - explode: true
+        in: query
+        name: capabilityKeys
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionEnvironmentCostListDto'
+          description: ""
+        "400":
+          description: "The request was unacceptable, often due to missing a required\
+            \ parameter"
+        "401":
+          description: The bearer token is incorrect/expired or the requested account
+            information does not match the bearer token
+        "403":
+          description: Access denied
+        "404":
+          description: The requested resource was not found
+        "500":
+          description: Something went wrong on Account Management API's end
+      security:
+      - bearer: []
+      summary: Get cost summary grouped by environment for a given subscription
+      tags:
+      - Dynatrace Platform Subscription
+  /ref/v1/time-zones:
+    get:
+      operationId: ReferenceDataController_getTimezones
+      parameters: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/TimeZoneDto'
+                type: array
+          description: Success. The response contains the list of time zones.
+      security:
+      - bearer: []
+      summary: Lists all available time zones
+      tags:
+      - Reference data
+  /ref/v1/regions:
+    get:
+      operationId: ReferenceDataController_getRegions
+      parameters: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/RegionDto'
+                type: array
+          description: Success. The response contains the list of regions.
+      security:
+      - bearer: []
+      summary: Lists all available regions
+      tags:
+      - Reference data
+  /ref/v1/account/permissions:
+    get:
+      operationId: ReferenceDataController_getPermissions
+      parameters: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/PermissionDto'
+                type: array
+          description: Success. The response contains the list of permissions.
+      security:
+      - bearer: []
+      summary: Lists all available permissions
+      tags:
+      - Reference data
+components:
+  schemas:
+    UserLoginMetaDataDto:
+      properties:
+        successfulLoginCounter:
+          description: The number of successful sign-ins.
+          type: number
+        failedLoginCounter:
+          description: The number of failed sign-ins.
+          type: number
+        lastSuccessfulLogin:
+          description: The date and time of the most recent successful sign-in in
+            `2021-05-01T15:11:00Z` format.
+          type: string
+        lastFailedLogin:
+          description: The date and time of the most recent failed sign-in in `2021-05-01T15:11:00Z`
+            format.
+          type: string
+        createdAt:
+          description: The date and time of user creation in `2021-05-01T15:11:00Z`
+            format.
+          type: string
+        updatedAt:
+          description: The date and time of the most recent modification to the user
+            in `2021-05-01T15:11:00Z` format.
+          type: string
+      required:
+      - createdAt
+      - failedLoginCounter
+      - lastFailedLogin
+      - lastSuccessfulLogin
+      - successfulLoginCounter
+      - updatedAt
+      type: object
+    UsersDto:
+      example:
+        userLoginMetadata: ""
+        uid: uid
+        userStatus: ACTIVE
+        surname: surname
+        emergencyContact: true
+        name: name
+        email: email
+      properties:
+        uid:
+          description: The UUID of the user.
+          type: string
+        email:
+          description: The email address of the user.
+          type: string
+        name:
+          description: The first name of the user.
+          type: string
+        surname:
+          description: The last name of the user.
+          type: string
+        userStatus:
+          description: "The status of this user in Dynatrace: \n\n* `ACTIVE`: The\
+            \ user is active.\n* `INACTIVE`: The user is deactivated and cannot sign\
+            \ in to Dynatrace. \n* `PENDING`: The user received an invitation, but\
+            \ hasn't completed sign-up yet. \n* `DELETED`: The user was deleted and\
+            \ cannot sign in to Dynatrace anymore. \n* `ECUSTOMS_MANUALLY_BLOCKED`:\
+            \ The user is blocked due to to a trade and export compliance violation.\
+            \ \n"
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - PENDING
+          - DELETED
+          - ECUSTOMS_MANUALLY_BLOCKED
+          type: string
+        emergencyContact:
+          description: The user is (`true`) or is not (`false`) an emergency contact
+            for the account.
+          type: boolean
+        userLoginMetadata:
+          allOf:
+          - $ref: '#/components/schemas/UserLoginMetaDataDto'
+          description: Available if user has logged into Dynatrace at least once
+      required:
+      - email
+      - uid
+      type: object
+    UserListDto:
+      example:
+        count: 0.8008281904610115
+        items:
+        - userLoginMetadata: ""
+          uid: uid
+          userStatus: ACTIVE
+          surname: surname
+          emergencyContact: true
+          name: name
+          email: email
+        - userLoginMetadata: ""
+          uid: uid
+          userStatus: ACTIVE
+          surname: surname
+          emergencyContact: true
+          name: name
+          email: email
+      properties:
+        count:
+          description: The number of entries in the list.
+          type: number
+        items:
+          description: A list of the account's users.
+          items:
+            $ref: '#/components/schemas/UsersDto'
+          type: array
+      required:
+      - count
+      - items
+      type: object
+    AccountGroupDto:
+      example:
+        owner: LOCAL
+        createdAt: createdAt
+        groupName: groupName
+        accountName: accountName
+        accountUUID: accountUUID
+        description: description
+        uuid: uuid
+        updatedAt: updatedAt
+      properties:
+        groupName:
+          description: The name of the user group.
+          type: string
+        uuid:
+          description: The UUID of the user group.
+          type: string
+        owner:
+          description: The identity provider from which the group originates.
+          enum:
+          - LOCAL
+          - SCIM
+          - SAML
+          - DCS
+          type: string
+        accountUUID:
+          description: The UUID of the Dynatrace account.
+          type: string
+        accountName:
+          description: The name of the Dynatrace account.
+          type: string
+        description:
+          description: A short description of the group.
+          type: string
+        createdAt:
+          description: The date and time of the group creation in `2021-05-01T15:11:00Z`
+            format.
+          type: string
+        updatedAt:
+          description: The date and time of the most recent modification to the group
+            in `2021-05-01T15:11:00Z` format.
+          type: string
+      required:
+      - accountName
+      - accountUUID
+      - createdAt
+      - description
+      - groupName
+      - owner
+      - updatedAt
+      - uuid
+      type: object
+    GroupUserDto:
+      example:
+        uid: uid
+        userStatus: ACTIVE
+        surname: surname
+        emergencyContact: true
+        name: name
+        groups:
+        - owner: LOCAL
+          createdAt: createdAt
+          groupName: groupName
+          accountName: accountName
+          accountUUID: accountUUID
+          description: description
+          uuid: uuid
+          updatedAt: updatedAt
+        - owner: LOCAL
+          createdAt: createdAt
+          groupName: groupName
+          accountName: accountName
+          accountUUID: accountUUID
+          description: description
+          uuid: uuid
+          updatedAt: updatedAt
+        email: email
+      properties:
+        uid:
+          description: The UUID of the user.
+          type: string
+        email:
+          description: The email address of the user.
+          type: string
+        name:
+          description: The first name of the user.
+          type: string
+        surname:
+          description: The last name of the user.
+          type: string
+        userStatus:
+          description: "The status of this user in Dynatrace: \n\n* `ACTIVE`: The\
+            \ user is active.\n* `INACTIVE`: The user is deactivated and cannot sign\
+            \ in to Dynatrace. \n* `PENDING`: The user received an invitation, but\
+            \ hasn't completed sign-up yet. \n* `DELETED`: The user was deleted and\
+            \ cannot sign in to Dynatrace anymore. \n* `ECUSTOMS_MANUALLY_BLOCKED`:\
+            \ The user is blocked due to to a trade and export compliance violation.\
+            \ \n"
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - PENDING
+          - DELETED
+          - ECUSTOMS_MANUALLY_BLOCKED
+          type: string
+        emergencyContact:
+          description: The user is (`true`) or is not (`false`) an emergency contact
+            for the account.
+          type: boolean
+        groups:
+          description: A list of groups of which the user is a member.
+          items:
+            $ref: '#/components/schemas/AccountGroupDto'
+          type: array
+      required:
+      - email
+      - groups
+      - uid
+      type: object
+    UserEmailDto:
+      example:
+        email: email
+      properties:
+        email:
+          description: The email address of the user.
+          type: string
+      required:
+      - email
+      type: object
+    GetGroupDto:
+      example:
+        owner: LOCAL
+        createdAt: createdAt
+        federatedAttributeValues:
+        - federatedAttributeValues
+        - federatedAttributeValues
+        name: name
+        description: description
+        uuid: uuid
+        updatedAt: updatedAt
+      properties:
+        uuid:
+          description: The UUID of the user group.
+          type: string
+        name:
+          description: The name of the user group.
+          type: string
+        description:
+          description: A short description of the user group.
+          type: string
+        federatedAttributeValues:
+          description: A list of values associating this group with the corresponding
+            claim from an identity provider.
+          items:
+            type: string
+          type: array
+        owner:
+          description: The identity provider from which the group originates.
+          enum:
+          - LOCAL
+          - SCIM
+          - SAML
+          - DCS
+          type: string
+        createdAt:
+          description: The date and time of the group creation in `2021-05-01T15:11:00Z`
+            format.
+          type: string
+        updatedAt:
+          description: The date and time of the most recent group modification in
+            `2021-05-01T15:11:00Z` format.
+          type: string
+      required:
+      - createdAt
+      - name
+      - owner
+      - updatedAt
+      type: object
+    GroupListDto:
+      example:
+        count: 0.8008281904610115
+        items:
+        - owner: LOCAL
+          createdAt: createdAt
+          federatedAttributeValues:
+          - federatedAttributeValues
+          - federatedAttributeValues
+          name: name
+          description: description
+          uuid: uuid
+          updatedAt: updatedAt
+        - owner: LOCAL
+          createdAt: createdAt
+          federatedAttributeValues:
+          - federatedAttributeValues
+          - federatedAttributeValues
+          name: name
+          description: description
+          uuid: uuid
+          updatedAt: updatedAt
+      properties:
+        count:
+          description: The number of entries in the list.
+          type: number
+        items:
+          items:
+            $ref: '#/components/schemas/GetGroupDto'
+          type: array
+      required:
+      - count
+      - items
+      type: object
+    UserDto:
+      example:
+        uid: uid
+        userStatus: ACTIVE
+        surname: surname
+        emergencyContact: true
+        name: name
+        email: email
+      properties:
+        uid:
+          description: The UUID of the user.
+          type: string
+        email:
+          description: The email address of the user.
+          type: string
+        name:
+          description: The first name of the user.
+          type: string
+        surname:
+          description: The last name of the user.
+          type: string
+        userStatus:
+          description: "The status of this user in Dynatrace: \n\n* `ACTIVE`: The\
+            \ user is active.\n* `INACTIVE`: The user is deactivated and cannot sign\
+            \ in to Dynatrace. \n* `PENDING`: The user received an invitation, but\
+            \ hasn't completed sign-up yet. \n* `DELETED`: The user was deleted and\
+            \ cannot sign in to Dynatrace anymore. \n* `ECUSTOMS_MANUALLY_BLOCKED`:\
+            \ The user is blocked due to to a trade and export compliance violation.\
+            \ \n"
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - PENDING
+          - DELETED
+          - ECUSTOMS_MANUALLY_BLOCKED
+          type: string
+        emergencyContact:
+          description: The user is (`true`) or is not (`false`) an emergency contact
+            for the account.
+          type: boolean
+      required:
+      - email
+      - uid
+      type: object
+    GroupUserListDto:
+      example:
+        count: 0.8008281904610115
+        items:
+        - uid: uid
+          userStatus: ACTIVE
+          surname: surname
+          emergencyContact: true
+          name: name
+          email: email
+        - uid: uid
+          userStatus: ACTIVE
+          surname: surname
+          emergencyContact: true
+          name: name
+          email: email
+      properties:
+        count:
+          description: The number of entries in the list.
+          type: number
+        items:
+          items:
+            $ref: '#/components/schemas/UserDto'
+          type: array
+      required:
+      - count
+      - items
+      type: object
+    PutGroupDto:
+      example:
+        owner: "{}"
+        federatedAttributeValues:
+        - federatedAttributeValues
+        - federatedAttributeValues
+        name: name
+        description: description
+        uuid: uuid
+      properties:
+        uuid:
+          description: The UUID of the user group.
+          type: string
+        name:
+          description: The name of the user group.
+          type: string
+        description:
+          description: A short description of the user group.
+          type: string
+        federatedAttributeValues:
+          description: "A list of values associating this group with the corresponding\
+            \ claim from an identity provider. If present, sets `owner` to SAML, otherwise\
+            \ `owner` will be LOCAL"
+          items:
+            type: string
+          type: array
+        owner:
+          description: The owner type of the group.
+          type: object
+      required:
+      - name
+      type: object
+    PermissionsDto:
+      example:
+        createdAt: createdAt
+        scopeType: account
+        scope: scope
+        permissionName: account-company-info
+        updatedAt: updatedAt
+      properties:
+        permissionName:
+          description: The name of the permission.
+          enum:
+          - account-company-info
+          - account-user-management
+          - account-viewer
+          - tenant-viewer
+          - tenant-manage-settings
+          - tenant-agent-install
+          - tenant-logviewer
+          - tenant-view-sensitive-request-data
+          - tenant-configure-request-capture-data
+          - tenant-replay-sessions-with-masking
+          - tenant-replay-sessions-without-masking
+          - tenant-manage-security-problems
+          - tenant-view-security-problems
+          - tenant-manage-support-tickets
+          type: string
+        scope:
+          description: "The scope of the permission. Depending on the scope type,\
+            \ it is defined by: \n\n* `account`: The UUID of the account. \n* `tenant`:\
+            \ The ID of the environment. \n* `management-zone`: The ID of the management\
+            \ zone from an environment in `{environment-id}:{management-zone-id}`\
+            \ format."
+          type: string
+        scopeType:
+          description: The type of the permission scope.
+          enum:
+          - account
+          - tenant
+          - management-zone
+          type: string
+        createdAt:
+          description: The date and time of the permission creation in `2021-05-01T15:11:00Z`
+            format.
+          type: string
+        updatedAt:
+          description: The date and time of the most recent permission modification
+            in `2021-05-01T15:11:00Z` format.
+          type: string
+      required:
+      - permissionName
+      - scope
+      - scopeType
+      type: object
+    PermissionsGroupDto:
+      example:
+        owner: LOCAL
+        createdAt: createdAt
+        federatedAttributeValues:
+        - federatedAttributeValues
+        - federatedAttributeValues
+        permissions:
+        - createdAt: createdAt
+          scopeType: account
+          scope: scope
+          permissionName: account-company-info
+          updatedAt: updatedAt
+        - createdAt: createdAt
+          scopeType: account
+          scope: scope
+          permissionName: account-company-info
+          updatedAt: updatedAt
+        name: name
+        description: description
+        uuid: uuid
+        updatedAt: updatedAt
+      properties:
+        uuid:
+          description: The UUID of the user group.
+          type: string
+        name:
+          description: The name of the user group.
+          type: string
+        description:
+          description: A short description of the user group.
+          type: string
+        federatedAttributeValues:
+          description: A list of values associating this group with the corresponding
+            claim from an identity provider.
+          items:
+            type: string
+          type: array
+        owner:
+          description: The identity provider from which the group originates.
+          enum:
+          - LOCAL
+          - SCIM
+          - SAML
+          - DCS
+          type: string
+        createdAt:
+          description: The date and time of the group creation in `2021-05-01T15:11:00Z`
+            format.
+          type: string
+        updatedAt:
+          description: The date and time of the most recent group modification in
+            `2021-05-01T15:11:00Z` format.
+          type: string
+        permissions:
+          description: A list of permissions assigned to the group.
+          items:
+            $ref: '#/components/schemas/PermissionsDto'
+          type: array
+      required:
+      - createdAt
+      - name
+      - owner
+      - permissions
+      - updatedAt
+      type: object
+    Condition:
+      example:
+        values:
+        - values
+        - values
+        name: name
+        operator: operator
+      properties:
+        name:
+          description: "The name of the condition. \n\n It indicates which part of\
+            \ the **services** is checked by the condition."
+          type: string
+        operator:
+          description: The operator of the condition.
+          type: string
+        values:
+          description: A list of reference values of the condition.
+          items:
+            type: string
+          type: array
+      required:
+      - name
+      - operator
+      - values
+      type: object
+    EffectivePolicy:
+      properties:
+        uuid:
+          description: The ID of the policy.
+          type: string
+        name:
+          description: The display name of the policy.
+          type: string
+        statementQuery:
+          description: The the statement query of the policy.
+          type: string
+        levelType:
+          description: The type of the level to which the policy applies.
+          type: string
+        levelId:
+          description: The ID of the level to which the policy applies.
+          type: string
+      required:
+      - levelId
+      - levelType
+      - name
+      - statementQuery
+      - uuid
+      type: object
+    EffectiveBinding:
+      properties:
+        groupUuid:
+          description: The UUID of group
+          type: string
+        levelType:
+          description: The type of the level to which the binding applies.
+          type: string
+        levelId:
+          description: The ID of the level to which the binding applies.
+          type: string
+      required:
+      - groupUuid
+      - levelId
+      - levelType
+      type: object
+    EffectivePolicyWithBinding:
+      example:
+        binding: ""
+        policy: ""
+      properties:
+        policy:
+          allOf:
+          - $ref: '#/components/schemas/EffectivePolicy'
+          description: Effective policy
+        binding:
+          allOf:
+          - $ref: '#/components/schemas/EffectiveBinding'
+          description: Effective binding
+      required:
+      - binding
+      - policy
+      type: object
+    EffectivePermissionEffects:
+      example:
+        effectivePolicies:
+        - binding: ""
+          policy: ""
+        - binding: ""
+          policy: ""
+        effect: effect
+        conditions:
+        - values:
+          - values
+          - values
+          name: name
+          operator: operator
+        - values:
+          - values
+          - values
+          name: name
+          operator: operator
+      properties:
+        effect:
+          description: Effect of policy
+          type: string
+        conditions:
+          description: Policy condition
+          items:
+            $ref: '#/components/schemas/Condition'
+          type: array
+        effectivePolicies:
+          description: A list of effective policies.
+          items:
+            $ref: '#/components/schemas/EffectivePolicyWithBinding'
+          type: array
+      required:
+      - conditions
+      - effect
+      - effectivePolicies
+      type: object
+    EffectivePermission:
+      example:
+        effects:
+        - effectivePolicies:
+          - binding: ""
+            policy: ""
+          - binding: ""
+            policy: ""
+          effect: effect
+          conditions:
+          - values:
+            - values
+            - values
+            name: name
+            operator: operator
+          - values:
+            - values
+            - values
+            name: name
+            operator: operator
+        - effectivePolicies:
+          - binding: ""
+            policy: ""
+          - binding: ""
+            policy: ""
+          effect: effect
+          conditions:
+          - values:
+            - values
+            - values
+            name: name
+            operator: operator
+          - values:
+            - values
+            - values
+            name: name
+            operator: operator
+        permission: permission
+      properties:
+        permission:
+          description: One of a effective permissions
+          type: string
+        effects:
+          description: A list of policies.
+          items:
+            $ref: '#/components/schemas/EffectivePermissionEffects'
+          type: array
+      required:
+      - effects
+      - permission
+      type: object
+    EffectivePermissions:
+      example:
+        effectivePermissions:
+        - effects:
+          - effectivePolicies:
+            - binding: ""
+              policy: ""
+            - binding: ""
+              policy: ""
+            effect: effect
+            conditions:
+            - values:
+              - values
+              - values
+              name: name
+              operator: operator
+            - values:
+              - values
+              - values
+              name: name
+              operator: operator
+          - effectivePolicies:
+            - binding: ""
+              policy: ""
+            - binding: ""
+              policy: ""
+            effect: effect
+            conditions:
+            - values:
+              - values
+              - values
+              name: name
+              operator: operator
+            - values:
+              - values
+              - values
+              name: name
+              operator: operator
+          permission: permission
+        - effects:
+          - effectivePolicies:
+            - binding: ""
+              policy: ""
+            - binding: ""
+              policy: ""
+            effect: effect
+            conditions:
+            - values:
+              - values
+              - values
+              name: name
+              operator: operator
+            - values:
+              - values
+              - values
+              name: name
+              operator: operator
+          - effectivePolicies:
+            - binding: ""
+              policy: ""
+            - binding: ""
+              policy: ""
+            effect: effect
+            conditions:
+            - values:
+              - values
+              - values
+              name: name
+              operator: operator
+            - values:
+              - values
+              - values
+              name: name
+              operator: operator
+          permission: permission
+      properties:
+        effectivePermissions:
+          description: List of effective permissions.
+          items:
+            $ref: '#/components/schemas/EffectivePermission'
+          type: array
+      required:
+      - effectivePermissions
+      type: object
+    ErrorDto:
+      properties:
+        code:
+          description: The code of the error.
+          type: number
+        message:
+          description: A short description of the error.
+          type: string
+        errorsMap:
+          additionalProperties:
+            type: string
+          type: object
+      required:
+      - code
+      - errorsMap
+      - message
+      type: object
+    PolicyOverview:
+      example:
+        levelType: levelType
+        levelId: levelId
+        name: name
+        description: description
+        uuid: uuid
+      properties:
+        uuid:
+          description: The ID of the policy.
+          type: string
+        name:
+          description: The display name of the policy.
+          type: string
+        description:
+          description: A short description of the policy.
+          type: string
+        levelId:
+          description: The ID of the level to which the policy applies.
+          type: string
+        levelType:
+          description: The type of the level to which the policy applies.
+          type: string
+      required:
+      - description
+      - levelId
+      - levelType
+      - name
+      - uuid
+      type: object
+    PolicyOverviewDtoList:
+      example:
+        policyOverviewList:
+        - levelType: levelType
+          levelId: levelId
+          name: name
+          description: description
+          uuid: uuid
+        - levelType: levelType
+          levelId: levelId
+          name: name
+          description: description
+          uuid: uuid
+      properties:
+        policyOverviewList:
+          description: A list of policies.
+          items:
+            $ref: '#/components/schemas/PolicyOverview'
+          type: array
+      required:
+      - policyOverviewList
+      type: object
+    PolicyDto:
+      example:
+        name: name
+        description: description
+        uuid: uuid
+      properties:
+        uuid:
+          description: The ID of the policy.
+          type: string
+        name:
+          description: The display name of the policy.
+          type: string
+        description:
+          description: A short description of the policy.
+          type: string
+      required:
+      - description
+      - name
+      - uuid
+      type: object
+    PolicyDtoList:
+      example:
+        policies:
+        - name: name
+          description: description
+          uuid: uuid
+        - name: name
+          description: description
+          uuid: uuid
+      properties:
+        policies:
+          description: A list of policies.
+          items:
+            $ref: '#/components/schemas/PolicyDto'
+          type: array
+      required:
+      - policies
+      type: object
+    CreateOrUpdateLevelPolicyRequestDto:
+      example:
+        name: name
+        description: description
+        statementQuery: statementQuery
+        tags:
+        - tags
+        - tags
+      properties:
+        name:
+          description: The display name of the policy.
+          type: string
+        description:
+          description: A short description of the policy.
+          type: string
+        tags:
+          description: A list of tags.
+          items:
+            type: string
+          type: array
+        statementQuery:
+          description: "The [statement](https://dt-url.net/ht03ucb) of the policy."
+          type: string
+      required:
+      - description
+      - name
+      - statementQuery
+      - tags
+      type: object
+    ValidationDto:
+      example:
+        warnings:
+        - warnings
+        - warnings
+      properties:
+        warnings:
+          description: A list of validation warnings.
+          items:
+            type: string
+          type: array
+      required:
+      - warnings
+      type: object
+    Statement:
+      example:
+        service: service
+        permissions:
+        - permissions
+        - permissions
+        effect: effect
+        conditions:
+        - values:
+          - values
+          - values
+          name: name
+          operator: operator
+        - values:
+          - values
+          - values
+          name: name
+          operator: operator
+      properties:
+        effect:
+          description: "The effect of the policy (for example, allow something)."
+          type: string
+        service:
+          description: The service to which the policy applies.
+          type: string
+        permissions:
+          description: A list of granted permissions.
+          items:
+            type: string
+          type: array
+        conditions:
+          description: A list of conditions limiting the granted permissions.
+          items:
+            $ref: '#/components/schemas/Condition'
+          type: array
+      required:
+      - conditions
+      - effect
+      - permissions
+      - service
+      type: object
+    LevelPolicyDto:
+      example:
+        name: name
+        description: description
+        statementQuery: statementQuery
+        statements:
+        - service: service
+          permissions:
+          - permissions
+          - permissions
+          effect: effect
+          conditions:
+          - values:
+            - values
+            - values
+            name: name
+            operator: operator
+          - values:
+            - values
+            - values
+            name: name
+            operator: operator
+        - service: service
+          permissions:
+          - permissions
+          - permissions
+          effect: effect
+          conditions:
+          - values:
+            - values
+            - values
+            name: name
+            operator: operator
+          - values:
+            - values
+            - values
+            name: name
+            operator: operator
+        uuid: uuid
+        tags:
+        - tags
+        - tags
+      properties:
+        uuid:
+          description: The ID of the policy.
+          type: string
+        name:
+          description: The display name of the policy.
+          type: string
+        tags:
+          description: A list of tags.
+          items:
+            type: string
+          type: array
+        description:
+          description: A short description of the policy.
+          type: string
+        statementQuery:
+          description: "The [statement](https://dt-url.net/ht03ucb) of the policy."
+          type: string
+        statements:
+          description: The expanded form of the policy statement.
+          items:
+            $ref: '#/components/schemas/Statement'
+          type: array
+      required:
+      - description
+      - name
+      - statementQuery
+      - statements
+      - tags
+      - uuid
+      type: object
+    PolicyUuidsWithoutMetadataDto:
+      example:
+        policyUuids:
+        - policyUuids
+        - policyUuids
+      properties:
+        policyUuids:
+          description: A list of policies bound to the user group.
+          items:
+            type: string
+          type: array
+      required:
+      - policyUuids
+      type: object
+    PolicyUuidsDto:
+      example:
+        policyUuids:
+        - policyUuids
+        - policyUuids
+      properties:
+        policyUuids:
+          description: A list of policies bound to the user group.
+          items:
+            type: string
+          type: array
+      required:
+      - policyUuids
+      type: object
+    Binding:
+      example:
+        policyUuid: policyUuid
+        groups:
+        - groups
+        - groups
+      properties:
+        policyUuid:
+          description: The ID of the policy.
+          type: string
+        groups:
+          description: A list of user groups to which the policy applies.
+          items:
+            type: string
+          type: array
+      required:
+      - groups
+      - policyUuid
+      type: object
+    LevelPolicyBindingDto:
+      example:
+        levelType: levelType
+        levelId: levelId
+        policyBindings:
+        - policyUuid: policyUuid
+          groups:
+          - groups
+          - groups
+        - policyUuid: policyUuid
+          groups:
+          - groups
+          - groups
+      properties:
+        levelType:
+          description: The type of the policy level.
+          type: string
+        levelId:
+          description: The ID of the policy level.
+          type: string
+        policyBindings:
+          items:
+            $ref: '#/components/schemas/Binding'
+          type: array
+      required:
+      - levelId
+      - levelType
+      - policyBindings
+      type: object
+    CreateLevelPolicyBindingsRequestDto:
+      example:
+        policyBindings:
+        - policyUuid: policyUuid
+          groups:
+          - groups
+          - groups
+        - policyUuid: policyUuid
+          groups:
+          - groups
+          - groups
+      properties:
+        policyBindings:
+          description: A list of policy bindings of the user group.
+          items:
+            $ref: '#/components/schemas/Binding'
+          type: array
+      required:
+      - policyBindings
+      type: object
+    AppendLevelPolicyBindingsRequestDto:
+      example:
+        groups:
+        - groups
+        - groups
+      properties:
+        groups:
+          description: A list of user groups (specified by IDs) to which the policy
+            applies.
+          items:
+            type: string
+          type: array
+      required:
+      - groups
+      type: object
+    AppendLevelPolicyBindingForGroupDto:
+      example:
+        metadata:
+          key: metadata
+        parameters:
+          key: parameters
+      properties:
+        parameters:
+          additionalProperties:
+            type: string
+          description: Parameters provided for bindings
+          type: object
+        metadata:
+          additionalProperties:
+            type: string
+          description: Metadata provided for bindings
+          type: object
+      type: object
+    ServiceUserNameDto:
+      example:
+        name: name
+      properties:
+        name:
+          description: The name of the new service user
+          type: string
+      required:
+      - name
+      type: object
+    ServiceUserUuidDto:
+      example:
+        uuid: uuid
+      properties:
+        uuid:
+          description: The UUID of the new service user
+          type: string
+      required:
+      - uuid
+      type: object
+    ExternalServiceUserDto:
+      example:
+        uid: uid
+        surname: surname
+        name: name
+        email: email
+      properties:
+        uid:
+          description: UUID of service user
+          type: string
+        email:
+          description: Email of service user
+          type: string
+        name:
+          description: Name of service user
+          type: string
+        surname:
+          description: Surname of service user
+          type: string
+      required:
+      - email
+      - name
+      - surname
+      - uid
+      type: object
+    ExternalServiceUsersPageDto:
+      example:
+        nextPageKey: nextPageKey
+        totalCount: 0.8008281904610115
+        results:
+        - uid: uid
+          surname: surname
+          name: name
+          email: email
+        - uid: uid
+          surname: surname
+          name: name
+          email: email
+      properties:
+        results:
+          items:
+            $ref: '#/components/schemas/ExternalServiceUserDto'
+          type: array
+        nextPageKey:
+          description: Next page key to be used in querying for next results page
+          type: string
+        totalCount:
+          description: Total number of service users
+          type: number
+      required:
+      - nextPageKey
+      - results
+      - totalCount
+      type: object
+    TenantResourceDto:
+      example:
+        name: name
+        id: id
+      properties:
+        name:
+          description: The name of the environment.
+          type: string
+        id:
+          description: The ID of the environment.
+          type: string
+      required:
+      - id
+      - name
+      type: object
+    ManagementZoneResourceDto:
+      example:
+        parent: parent
+        name: name
+        id: id
+      properties:
+        parent:
+          description: The ID of the environment to which the management zone belongs.
+          type: string
+        name:
+          description: The name of the management zone.
+          type: string
+        id:
+          description: The ID of the management zone.
+          type: string
+      required:
+      - id
+      - name
+      - parent
+      type: object
+    EnvironmentResourceDto:
+      example:
+        managementZoneResources:
+        - parent: parent
+          name: name
+          id: id
+        - parent: parent
+          name: name
+          id: id
+        tenantResources:
+        - name: name
+          id: id
+        - name: name
+          id: id
+      properties:
+        tenantResources:
+          description: A list of environments in the account.
+          items:
+            $ref: '#/components/schemas/TenantResourceDto'
+          type: array
+        managementZoneResources:
+          description: A list of management zones in the account.
+          items:
+            $ref: '#/components/schemas/ManagementZoneResourceDto'
+          type: array
+      required:
+      - managementZoneResources
+      - tenantResources
+      type: object
+    SubscriptionSummaryDto:
+      example:
+        name: name
+        startTime: startTime
+        endTime: endTime
+        type: type
+        uuid: uuid
+        status: status
+      properties:
+        uuid:
+          description: The UUID of the Dynatrace Platform Subscription.
+          type: string
+        type:
+          description: The type of the Dynatrace Platform Subscription.
+          type: string
+        name:
+          description: The name of the Dynatrace Platform Subscription.
+          type: string
+        status:
+          description: The status of the Dynatrace Platform Subscription.
+          type: string
+        startTime:
+          description: The start date of the subscription in `2021-05-01` format.
+          type: string
+        endTime:
+          description: The end date of the subscription in `2021-05-01` format.
+          type: string
+      required:
+      - endTime
+      - name
+      - startTime
+      - status
+      - type
+      - uuid
+      type: object
+    SubscriptionListDto:
+      example:
+        data:
+        - name: name
+          startTime: startTime
+          endTime: endTime
+          type: type
+          uuid: uuid
+          status: status
+        - name: name
+          startTime: startTime
+          endTime: endTime
+          type: type
+          uuid: uuid
+          status: status
+      properties:
+        data:
+          description: A list of subscriptions of the account.
+          items:
+            $ref: '#/components/schemas/SubscriptionSummaryDto'
+          type: array
+      required:
+      - data
+      type: object
+    Event:
+      example:
+        date: 2000-01-23T04:56:07.000+00:00
+        severity: severity
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        environmentUuid: environmentUuid
+        capability: capability
+        notificationLevel: notificationLevel
+        eventType: eventType
+        message: message
+      properties:
+        environmentUuid:
+          description: The UUID of the environment that threw the event.
+          type: string
+        capability:
+          description: The subscription capability name.
+          type: string
+        date:
+          description: The date the event was fired in `2021-05-01T15:11:00Z` format.
+          format: date-time
+          type: string
+        createdAt:
+          description: The date the notification was created in `2021-05-01T15:11:00Z`
+            format.
+          format: date-time
+          type: string
+        severity:
+          description: The severity of the even.
+          type: string
+        message:
+          description: The message from the event.
+          type: string
+        eventType:
+          description: "The type of event: Forecast or usage."
+          type: string
+        notificationLevel:
+          description: The notification level of the event.
+          type: string
+      required:
+      - capability
+      - createdAt
+      - date
+      - environmentUuid
+      - eventType
+      - message
+      - notificationLevel
+      - severity
+      type: object
+    Forecast:
+      example:
+        forecastLower: 6.027456183070403
+        forecastUpper: 1.4658129805029452
+        forecastBudgetDate: 2000-01-23T04:56:07.000+00:00
+        forecastMedian: 0.8008281904610115
+        forecastBudgetPct: 5.637376656633329
+        forecastCreatedAt: 2000-01-23T04:56:07.000+00:00
+        budget: 5.962133916683182
+      properties:
+        forecastMedian:
+          description: The median of the forecast snapshot.
+          type: number
+        forecastLower:
+          description: The lower bound for the forecast snapshot.
+          type: number
+        forecastUpper:
+          description: The upper bound for the forecast snapshot.
+          type: number
+        budget:
+          description: The budget for the forecast snapshot.
+          type: number
+        forecastBudgetPct:
+          description: The budget percent for the forecast snapshot.
+          type: number
+        forecastBudgetDate:
+          description: The date the forecast snapshot's budget reached the quota amount.
+          format: date-time
+          type: string
+        forecastCreatedAt:
+          description: The date the forecast snapshot was created.
+          format: date-time
+          type: string
+      required:
+      - budget
+      - forecastBudgetDate
+      - forecastBudgetPct
+      - forecastCreatedAt
+      - forecastLower
+      - forecastMedian
+      - forecastUpper
+      type: object
+    SubscriptionAccountDto:
+      properties:
+        uuid:
+          description: The UUID of the account
+          type: string
+      required:
+      - uuid
+      type: object
+    SubscriptionBudgetDto:
+      properties:
+        total:
+          description: The total budget for the subscription
+          type: number
+        used:
+          description: The total budget used for the subscription
+          type: number
+        currencyCode:
+          description: The currency code for the subscription
+          type: string
+      required:
+      - currencyCode
+      - total
+      - used
+      type: object
+    SubscriptionCurrentPeriodDto:
+      properties:
+        startTime:
+          description: The current period start date in `2021-05-01` format.
+          type: string
+        endTime:
+          description: The current period end date in `2021-05-01` format.
+          type: string
+        daysRemaining:
+          description: Days remaining in the current period
+          type: number
+      required:
+      - daysRemaining
+      - endTime
+      - startTime
+      type: object
+    SubscriptionPeriodDto:
+      example:
+        startTime: startTime
+        endTime: endTime
+      properties:
+        startTime:
+          description: The subscription period start time in `2021-05-01T15:11:00Z`
+            format.
+          type: string
+        endTime:
+          description: The subscription period end time in `2021-05-01T15:11:00Z`
+            format.
+          type: string
+      required:
+      - endTime
+      - startTime
+      type: object
+    SubscriptionCapabilityDto:
+      example:
+        name: name
+        key: key
+      properties:
+        key:
+          description: The subscription capability key
+          type: string
+        name:
+          description: The subscription capability name
+          type: string
+      required:
+      - key
+      - name
+      type: object
+    SubscriptionDto:
+      example:
+        capabilities:
+        - name: name
+          key: key
+        - name: name
+          key: key
+        name: name
+        periods:
+        - startTime: startTime
+          endTime: endTime
+        - startTime: startTime
+          endTime: endTime
+        startTime: startTime
+        endTime: endTime
+        type: type
+        uuid: uuid
+        account: ""
+        currentPeriod: ""
+        status: status
+        budget: ""
+      properties:
+        uuid:
+          description: The UUID of the Dynatrace Platform Subscription.
+          type: string
+        type:
+          description: The type of the Dynatrace Platform Subscription.
+          type: string
+        name:
+          description: The name of the Dynatrace Platform Subscription.
+          type: string
+        status:
+          description: The status of the Dynatrace Platform Subscription.
+          type: string
+        startTime:
+          description: The start date of the subscription in `2021-05-01` format.
+          type: string
+        endTime:
+          description: The end date of the subscription in `2021-05-01` format.
+          type: string
+        account:
+          allOf:
+          - $ref: '#/components/schemas/SubscriptionAccountDto'
+          description: The account information associated with the subscription
+        budget:
+          allOf:
+          - $ref: '#/components/schemas/SubscriptionBudgetDto'
+          description: The budget information associated with the subscription
+        currentPeriod:
+          allOf:
+          - $ref: '#/components/schemas/SubscriptionCurrentPeriodDto'
+          description: The current period information associated with the subscription
+        periods:
+          description: A list of period data of the subscription.
+          items:
+            $ref: '#/components/schemas/SubscriptionPeriodDto'
+          type: array
+        capabilities:
+          description: A list of subscription capabilities.
+          items:
+            $ref: '#/components/schemas/SubscriptionCapabilityDto'
+          type: array
+      required:
+      - account
+      - budget
+      - capabilities
+      - currentPeriod
+      - endTime
+      - name
+      - periods
+      - startTime
+      - status
+      - type
+      - uuid
+      type: object
+    SubscriptionUsageDto:
+      example:
+        capabilityKey: capabilityKey
+        capabilityName: capabilityName
+        startTime: startTime
+        endTime: endTime
+        value: 0.8008281904610115
+        unitMeasure: unitMeasure
+      properties:
+        capabilityKey:
+          description: The capability key
+          type: string
+        capabilityName:
+          description: The name of the capability
+          type: string
+        startTime:
+          description: The start time of the capability usage in `2021-05-01T15:11:00Z`
+            format.
+          type: string
+        endTime:
+          description: The end time of the capability usage in `2021-05-01T15:11:00Z`
+            format.
+          type: string
+        value:
+          description: The usage for the capability
+          type: number
+        unitMeasure:
+          description: The unit of measure for the capability usage
+          type: string
+      required:
+      - capabilityKey
+      - capabilityName
+      - endTime
+      - startTime
+      - unitMeasure
+      - value
+      type: object
+    SubscriptionEnvironmentUsageDto:
+      example:
+        environmentId: environmentId
+        usage:
+        - capabilityKey: capabilityKey
+          capabilityName: capabilityName
+          startTime: startTime
+          endTime: endTime
+          value: 0.8008281904610115
+          unitMeasure: unitMeasure
+        - capabilityKey: capabilityKey
+          capabilityName: capabilityName
+          startTime: startTime
+          endTime: endTime
+          value: 0.8008281904610115
+          unitMeasure: unitMeasure
+      properties:
+        environmentId:
+          description: The id of the environment
+          type: string
+        usage:
+          description: A list of subscription usage for the environment.
+          items:
+            $ref: '#/components/schemas/SubscriptionUsageDto'
+          type: array
+      required:
+      - environmentId
+      - usage
+      type: object
+    SubscriptionEnvironmentUsageListDto:
+      example:
+        lastModifiedTime: lastModifiedTime
+        data:
+        - environmentId: environmentId
+          usage:
+          - capabilityKey: capabilityKey
+            capabilityName: capabilityName
+            startTime: startTime
+            endTime: endTime
+            value: 0.8008281904610115
+            unitMeasure: unitMeasure
+          - capabilityKey: capabilityKey
+            capabilityName: capabilityName
+            startTime: startTime
+            endTime: endTime
+            value: 0.8008281904610115
+            unitMeasure: unitMeasure
+        - environmentId: environmentId
+          usage:
+          - capabilityKey: capabilityKey
+            capabilityName: capabilityName
+            startTime: startTime
+            endTime: endTime
+            value: 0.8008281904610115
+            unitMeasure: unitMeasure
+          - capabilityKey: capabilityKey
+            capabilityName: capabilityName
+            startTime: startTime
+            endTime: endTime
+            value: 0.8008281904610115
+            unitMeasure: unitMeasure
+      properties:
+        data:
+          description: Subscription usage data
+          items:
+            $ref: '#/components/schemas/SubscriptionEnvironmentUsageDto'
+          type: array
+        lastModifiedTime:
+          description: The time the subscription data was last modified in `2021-05-01T15:11:00Z`
+            format.
+          type: string
+      required:
+      - data
+      - lastModifiedTime
+      type: object
+    SubscriptionUsageListDto:
+      example:
+        lastModifiedTime: lastModifiedTime
+        data:
+        - capabilityKey: capabilityKey
+          capabilityName: capabilityName
+          startTime: startTime
+          endTime: endTime
+          value: 0.8008281904610115
+          unitMeasure: unitMeasure
+        - capabilityKey: capabilityKey
+          capabilityName: capabilityName
+          startTime: startTime
+          endTime: endTime
+          value: 0.8008281904610115
+          unitMeasure: unitMeasure
+      properties:
+        data:
+          description: Subscription usage data
+          items:
+            $ref: '#/components/schemas/SubscriptionUsageDto'
+          type: array
+        lastModifiedTime:
+          description: The time the subscription data was last modified in `2021-05-01T15:11:00Z`
+            format.
+          type: string
+      required:
+      - data
+      - lastModifiedTime
+      type: object
+    SubscriptionCostDto:
+      example:
+        startTime: startTime
+        endTime: endTime
+        value: 0.8008281904610115
+        currencyCode: currencyCode
+      properties:
+        startTime:
+          description: The start time for the capability cost in `2021-05-01T15:11:00Z`
+            format.
+          type: string
+        endTime:
+          description: The end time for the capability cost in `2021-05-01T15:11:00Z`
+            format.
+          type: string
+        value:
+          description: The total cost for all the capabilities combined
+          type: number
+        currencyCode:
+          description: The currency code for the cost
+          type: string
+      required:
+      - currencyCode
+      - endTime
+      - startTime
+      - value
+      type: object
+    SubscriptionCostListDto:
+      example:
+        lastModifiedTime: lastModifiedTime
+        data:
+        - startTime: startTime
+          endTime: endTime
+          value: 0.8008281904610115
+          currencyCode: currencyCode
+        - startTime: startTime
+          endTime: endTime
+          value: 0.8008281904610115
+          currencyCode: currencyCode
+      properties:
+        data:
+          description: Subscription cost data
+          items:
+            $ref: '#/components/schemas/SubscriptionCostDto'
+          type: array
+        lastModifiedTime:
+          description: The time the subscription data was last modified in `2021-05-01T15:11:00Z`
+            format.
+          type: string
+      required:
+      - data
+      - lastModifiedTime
+      type: object
+    SubscriptionCapabilityCostDto:
+      example:
+        capabilityKey: capabilityKey
+        capabilityName: capabilityName
+        startTime: startTime
+        endTime: endTime
+        value: 0.8008281904610115
+        currencyCode: currencyCode
+      properties:
+        startTime:
+          description: The start time for the capability cost in `2021-05-01T15:11:00Z`
+            format.
+          type: string
+        endTime:
+          description: The end time for the capability cost in `2021-05-01T15:11:00Z`
+            format.
+          type: string
+        value:
+          description: The total cost for all the capabilities combined
+          type: number
+        currencyCode:
+          description: The currency code for the cost
+          type: string
+        capabilityKey:
+          description: The capability key
+          type: string
+        capabilityName:
+          description: The name of the capability
+          type: string
+      required:
+      - capabilityKey
+      - capabilityName
+      - currencyCode
+      - endTime
+      - startTime
+      - value
+      type: object
+    SubscriptionEnvironmentCostDto:
+      example:
+        environmentId: environmentId
+        cost:
+        - capabilityKey: capabilityKey
+          capabilityName: capabilityName
+          startTime: startTime
+          endTime: endTime
+          value: 0.8008281904610115
+          currencyCode: currencyCode
+        - capabilityKey: capabilityKey
+          capabilityName: capabilityName
+          startTime: startTime
+          endTime: endTime
+          value: 0.8008281904610115
+          currencyCode: currencyCode
+      properties:
+        environmentId:
+          description: The id of the environment
+          type: string
+        cost:
+          description: A list of subscription cost for the environment.
+          items:
+            $ref: '#/components/schemas/SubscriptionCapabilityCostDto'
+          type: array
+      required:
+      - cost
+      - environmentId
+      type: object
+    SubscriptionEnvironmentCostListDto:
+      example:
+        lastModifiedTime: lastModifiedTime
+        data:
+        - environmentId: environmentId
+          cost:
+          - capabilityKey: capabilityKey
+            capabilityName: capabilityName
+            startTime: startTime
+            endTime: endTime
+            value: 0.8008281904610115
+            currencyCode: currencyCode
+          - capabilityKey: capabilityKey
+            capabilityName: capabilityName
+            startTime: startTime
+            endTime: endTime
+            value: 0.8008281904610115
+            currencyCode: currencyCode
+        - environmentId: environmentId
+          cost:
+          - capabilityKey: capabilityKey
+            capabilityName: capabilityName
+            startTime: startTime
+            endTime: endTime
+            value: 0.8008281904610115
+            currencyCode: currencyCode
+          - capabilityKey: capabilityKey
+            capabilityName: capabilityName
+            startTime: startTime
+            endTime: endTime
+            value: 0.8008281904610115
+            currencyCode: currencyCode
+      properties:
+        data:
+          description: Subscription cost data
+          items:
+            $ref: '#/components/schemas/SubscriptionEnvironmentCostDto'
+          type: array
+        lastModifiedTime:
+          description: The time the subscription data was last modified in `2021-05-01T15:11:00Z`
+            format.
+          type: string
+      required:
+      - data
+      - lastModifiedTime
+      type: object
+    TimeZoneDto:
+      example:
+        displayName: displayName
+        name: name
+      properties:
+        displayName:
+          description: The UTC-based name of the time zone.
+          type: string
+        name:
+          description: The standard name of the time zone.
+          type: string
+      required:
+      - displayName
+      - name
+      type: object
+    RegionDto:
+      example:
+        name: name
+      properties:
+        name:
+          description: The name of the region.
+          type: string
+      required:
+      - name
+      type: object
+    PermissionDto:
+      example:
+        description: description
+        id: id
+      properties:
+        id:
+          description: The ID of the permission.
+          type: string
+        description:
+          description: The display name of the permission.
+          type: string
+      required:
+      - description
+      - id
+      type: object
+  securitySchemes:
+    bearer:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http
