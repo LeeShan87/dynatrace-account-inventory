@@ -1,4 +1,4 @@
-package auth
+package dynatrace
 
 import (
 	"encoding/json"
