@@ -1,0 +1,53 @@
+# {{envID}}
+@envID = {{$dotenv ENVIRONMENT_ID}}
+# {{envToken}}
+@envToken = {{$dotenv ENV_API_TOKEN}}
+# {{configAPIURL}}
+@configAPIURL = https://{{envID}}.live.dynatrace.com/api/config/v1
+# {{env2APIURL}}
+@env2APIURL = https://{{envID}}.live.dynatrace.com/api/v2
+# {{env1APIURL}}
+@env1APIURL = https://{{envID}}.live.dynatrace.com/api/v1
+
+###
+# Config API v1
+### 
+
+###
+# @name Get all management zones
+GET {{configAPIURL}}/managementZones HTTP/1.1
+Authorization: Api-Token {{envToken}}
+
+###
+# Environment API v2
+###
+
+###
+# @name Get all active gates
+GET {{env2APIURL}}/activeGates HTTP/1.1
+Authorization: Api-Token {{envToken}}
+
+###
+# @name Get oldest 1000 auditlogs
+GET {{env2APIURL}}/auditlogs?pageSize=1000&sort=timestamp HTTP/1.1
+Authorization: Api-Token {{envToken}}
+
+###
+# @name Get all access tokens
+GET {{env2APIURL}}/apiTokens HTTP/1.1
+Authorization: Api-Token {{envToken}}
+
+###
+# @name Get 50 entity types
+GET {{env2APIURL}}/entityTypes?pageSize=50 HTTP/1.1
+Authorization: Api-Token {{envToken}}
+
+### 
+# @name Get 50 monitored HOST entities
+GET {{env2APIURL}}/entities?entitySelector=type(HOST)&pageSize=50 HTTP/1.1
+Authorization: Api-Token {{envToken}}
+
+###
+# Environment API v1
+###
+

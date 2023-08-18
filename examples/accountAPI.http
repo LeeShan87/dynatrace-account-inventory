@@ -28,6 +28,13 @@ grant_type=client_credentials
 &resource={{OURN}}
 
 ###
+# @name get environments
+GET https://api.dynatrace.com/env/v1/accounts/{{accountID}}/environments HTTP/1.1
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+
+###
 # @name get users
 GET {{apiUrl}}/accounts/{{accountID}}/users?service-users=true&pageSize=1000 HTTP/1.1
 Authorization: Bearer {{authToken}}

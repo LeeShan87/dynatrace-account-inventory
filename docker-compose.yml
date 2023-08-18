@@ -13,7 +13,7 @@ services:
     image: metabase/metabase
     container_name: metabase
     ports:
-      - "3000:3000"
+      - "3500:3000"
     depends_on:
       - mongodb
     volumes:
