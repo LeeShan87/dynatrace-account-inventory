@@ -4,9 +4,10 @@
 package main
 
 import (
+	"os"
+
 	"github.com/joho/godotenv"
 	"github.com/magefile/mage/sh"
-	"os"
 	//"path/filepath"
 )
 
@@ -30,6 +31,32 @@ func Generate() error {
 		"openapitools/openapi-generator-cli",
 		"generate", "-i", accountSwagger, "-g", "go", "-o", "/local/generated/account",
 		"--skip-validate-spec", "--additional-properties", "packageName=account",
+	)
+	return err
+}
+
+func GenerateEnvironmentClient() error {
+	cwd, err := os.Getwd()
+	if err != nil {
+		return err
+	}
+	err = sh.Run("docker", "run", "--rm",
+		"-v", cwd+":/local",
+		"openapitools/openapi-generator-cli",
+		"generate", "-i", "/local/openapidocs/environmentv1.json", "-g", "go", "-o", "/local/generated/environmentv1",
+		"--skip-validate-spec", "--additional-properties", "packageName=environmentv1",
+	)
+	err = sh.Run("docker", "run", "--rm",
+		"-v", cwd+":/local",
+		"openapitools/openapi-generator-cli",
+		"generate", "-i", "/local/openapidocs/environmentv2.json", "-g", "go", "-o", "/local/generated/environmentv2",
+		"--skip-validate-spec", "--additional-properties", "packageName=environmentv2",
+	)
+	err = sh.Run("docker", "run", "--rm",
+		"-v", cwd+":/local",
+		"openapitools/openapi-generator-cli",
+		"generate", "-i", "/local/openapidocs/config.json", "-g", "go", "-o", "/local/generated/configv1",
+		"--skip-validate-spec", "--additional-properties", "packageName=configv1",
 	)
 	return err
 }
