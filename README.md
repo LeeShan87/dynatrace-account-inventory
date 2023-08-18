@@ -9,3 +9,7 @@ If you didn't plan this ahead of time, you may end up with a mess of entities an
 The DynaTrace Account API has all the information about accounts, the environment APIs has information about monitored entities, and audit logs have information about who did what and when. This project will use all of these APIs to create a mapping between accounts and monitored entities.
 
 To make visualizing this mapping easier, this project will also use Metabase and MongoDB to create useful queries and dashboards.
+
+# Documentation
+
+Detailed documentation can be found in the [docs](docs) folder.
