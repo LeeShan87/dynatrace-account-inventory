@@ -64,3 +64,22 @@ Content-Type: application/json
 GET {{apiUrl}}/accounts/{{accountID}}/groups/{{myGroup}}/permissions HTTP/1.1
 Authorization: Bearer {{authToken}}
 Content-Type: application/json
+
+###
+# @name get subscriptions
+GET https://api.dynatrace.com/sub/v2/accounts/{{accountID}}/subscriptions HTTP/1.1
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+###
+# @name get subscription events
+GET https://api.dynatrace.com/sub/v2/accounts/{{accountID}}/subscriptions/events HTTP/1.1
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+###
+# @name get cost summary grouped by environment
+# @prompt subscriptionId
+GET https://api.dynatrace.com/sub/v2/accounts/{{accountID}}/subscriptions/{{subscriptionId}}/environments/costs HTTP/1.1
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
