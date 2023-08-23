@@ -43,11 +43,13 @@ func saveEnvironmentsInMongo(db *mongo.Database, environments *account.Environme
 	tenantBson := make([]interface{}, len(environments.TenantResources))
 	managementZoneBson := make([]interface{}, len(environments.ManagementZoneResources))
 	for i, tenant := range environments.TenantResources {
-		bsonTenant, _ := bson.Marshal(tenant)
+		mongoTenant := auth.ToMongoTenant(tenant)
+		bsonTenant, _ := bson.Marshal(mongoTenant)
 		tenantBson[i] = bsonTenant
 	}
 	for i, managementZone := range environments.ManagementZoneResources {
-		bsonManagementZone, _ := bson.Marshal(managementZone)
+		mongoManagementZone := auth.ToMongoManagementZone(managementZone)
+		bsonManagementZone, _ := bson.Marshal(mongoManagementZone)
 		managementZoneBson[i] = bsonManagementZone
 	}
 	insertedTenant, err := tenantCollection.InsertMany(context.Background(), tenantBson)

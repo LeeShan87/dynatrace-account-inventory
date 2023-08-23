@@ -29,7 +29,7 @@ func main() {
 	fmt.Println("Groups permissions will be updated: ", len(groups))
 	for _, group := range groups {
 		groupID := group.Uuid
-		fmt.Println("Fetching permissions for group: ", groupID)
+		fmt.Println("Fetching permissions for group: ", *groupID)
 		permissions, err := getPersmissionsForGroup(apiClient, utils.AccountID, *groupID)
 		utils.CheckError(err)
 		err = saveGroupPermissionsInMongo(db, group, *permissions)
@@ -47,7 +47,9 @@ func saveGroupPermissionsInMongo(db *mongo.Database, group account.GetGroupDto, 
 	groupCollection := db.Collection("groups")
 	permissionsBson := make([]interface{}, len(permissions.Permissions))
 	for i, permission := range permissions.Permissions {
-		bsonPermission, _ := bson.Marshal(permission)
+		mongoPermission := auth.ToMongoPermission(permission)
+		mongoPermission.GroupID = *group.Uuid
+		bsonPermission, _ := bson.Marshal(mongoPermission)
 		permissionsBson[i] = bsonPermission
 	}
 	insertManyResult, err := permissionsCollection.InsertMany(context.Background(), permissionsBson)

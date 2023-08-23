@@ -40,7 +40,7 @@ func fetchUsers(client *account.APIClient, accountID string) *account.UserListDt
 func saveUsersInMongo(users *account.UserListDto, collection *mongo.Collection) (*mongo.InsertManyResult, error) {
 	bsonUsers := make([]interface{}, len(users.Items))
 	for i, user := range users.Items {
-		bsonUser, _ := bson.Marshal(user)
+		bsonUser, _ := bson.Marshal(auth.ToMongoUser(user))
 		bsonUsers[i] = bsonUser
 	}
 	insertManyResult, err := collection.InsertMany(context.Background(), bsonUsers)

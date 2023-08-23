@@ -39,7 +39,7 @@ func fetchGroups(client *account.APIClient, accountID string) *account.GroupList
 func saveGroupsInMongo(groups *account.GroupListDto, collection *mongo.Collection) (*mongo.InsertManyResult, error) {
 	bsonGroups := make([]interface{}, len(groups.Items))
 	for i, group := range groups.Items {
-		bsonGroup, _ := bson.Marshal(group)
+		bsonGroup, _ := bson.Marshal(auth.ToMongoGroups(group))
 		bsonGroups[i] = bsonGroup
 	}
 	insertManyResult, err := collection.InsertMany(context.Background(), bsonGroups)

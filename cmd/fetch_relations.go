@@ -9,7 +9,6 @@ import (
 	"github.com/LeeShan87/dynatrace-account-inventory/utils"
 
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -42,7 +41,7 @@ func main() {
 	for _, group := range groups {
 		// Fetch users in group
 		groupId := group.Uuid
-		fmt.Println("Fetching users for group: ", groupId)
+		fmt.Println("Fetching users for group: ", *groupId)
 		users := getUsersInGroup(apiClient, utils.AccountID, *groupId)
 		err = updateGroupsUsersInMongo(db, *groupId, *users)
 		utils.CheckError(err)
@@ -93,7 +92,7 @@ func updateGroupsUsersInMongo(db *mongo.Database, group string, users account.Gr
 	userCollection := db.Collection("users")
 	groupCollection := db.Collection("groups")
 	groupID, _ := utils.FindDocumentIDByUUID(context.Background(), groupCollection, "uuid", group)
-	userIDs := make([]primitive.ObjectID, len(users.Items))
+	userIDs := make([]string, len(users.Items))
 	for i, user := range users.Items {
 		userID, err := utils.FindDocumentIDByUUID(context.Background(), userCollection, "uid", user.Uid)
 		if err != nil {
@@ -111,7 +110,7 @@ func updateUserGroupsInMongo(db *mongo.Database, id string, groups []account.Acc
 	userCollection := db.Collection("users")
 	groupCollection := db.Collection("groups")
 	userID, _ := utils.FindDocumentIDByUUID(context.Background(), userCollection, "uid", id)
-	groupIDs := make([]primitive.ObjectID, len(groups))
+	groupIDs := make([]string, len(groups))
 	for i, group := range groups {
 		groupID, err := utils.FindDocumentIDByUUID(context.Background(), groupCollection, "uuid", group.Uuid)
 		if err != nil {
