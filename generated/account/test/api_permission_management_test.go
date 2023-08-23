@@ -11,10 +11,11 @@ package account
 
 import (
 	"context"
+	"testing"
+
+	openapiclient "github.com/LeeShan87/dynatrace-account-inventory/generated/account"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
 )
 
 func Test_account_PermissionManagementAPIService(t *testing.T) {
@@ -24,7 +25,7 @@ func Test_account_PermissionManagementAPIService(t *testing.T) {
 
 	t.Run("Test PermissionManagementAPIService PermissionsControllerAddGroupPermissions", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var accountUuid string
 		var groupUuid string
@@ -38,7 +39,7 @@ func Test_account_PermissionManagementAPIService(t *testing.T) {
 
 	t.Run("Test PermissionManagementAPIService PermissionsControllerGetGroupPermissions", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var accountUuid string
 		var groupUuid string
@@ -53,7 +54,7 @@ func Test_account_PermissionManagementAPIService(t *testing.T) {
 
 	t.Run("Test PermissionManagementAPIService PermissionsControllerOverwriteGroupPermissions", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var accountUuid string
 		var groupUuid string
@@ -67,7 +68,7 @@ func Test_account_PermissionManagementAPIService(t *testing.T) {
 
 	t.Run("Test PermissionManagementAPIService PermissionsControllerRemoveGroupPermissions", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var accountUuid string
 		var groupUuid string

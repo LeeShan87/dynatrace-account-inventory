@@ -11,10 +11,11 @@ package account
 
 import (
 	"context"
+	"testing"
+
+	openapiclient "github.com/LeeShan87/dynatrace-account-inventory/generated/account"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
 )
 
 func Test_account_ReferenceDataAPIService(t *testing.T) {
@@ -24,7 +25,7 @@ func Test_account_ReferenceDataAPIService(t *testing.T) {
 
 	t.Run("Test ReferenceDataAPIService ReferenceDataControllerGetPermissions", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ReferenceDataAPI.ReferenceDataControllerGetPermissions(context.Background()).Execute()
 
@@ -36,7 +37,7 @@ func Test_account_ReferenceDataAPIService(t *testing.T) {
 
 	t.Run("Test ReferenceDataAPIService ReferenceDataControllerGetRegions", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ReferenceDataAPI.ReferenceDataControllerGetRegions(context.Background()).Execute()
 
@@ -48,7 +49,7 @@ func Test_account_ReferenceDataAPIService(t *testing.T) {
 
 	t.Run("Test ReferenceDataAPIService ReferenceDataControllerGetTimezones", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		resp, httpRes, err := apiClient.ReferenceDataAPI.ReferenceDataControllerGetTimezones(context.Background()).Execute()
 

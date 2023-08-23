@@ -1,19 +1,17 @@
 # \DynatracePlatformSubscriptionAPI
 
-All URIs are relative to *http://localhost*
+All URIs are relative to _http://localhost_
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**SubscriptionsControllerGetEnvironmentCost**](DynatracePlatformSubscriptionAPI.md#SubscriptionsControllerGetEnvironmentCost) | **Get** /sub/v2/accounts/{accountUuid}/subscriptions/{subscriptionUuid}/environments/cost | Get cost summary grouped by environment for a given subscription
-[**SubscriptionsControllerGetEnvironmentUsage**](DynatracePlatformSubscriptionAPI.md#SubscriptionsControllerGetEnvironmentUsage) | **Get** /sub/v2/accounts/{accountUuid}/subscriptions/{subscriptionUuid}/environments/usage | Get usage summary grouped by environment for a given subscription
-[**SubscriptionsControllerGetEvents**](DynatracePlatformSubscriptionAPI.md#SubscriptionsControllerGetEvents) | **Get** /sub/v2/accounts/{accountUuid}/subscriptions/events | Get all notification events for a given subscription
-[**SubscriptionsControllerGetForecast**](DynatracePlatformSubscriptionAPI.md#SubscriptionsControllerGetForecast) | **Get** /sub/v2/accounts/{accountUuid}/subscriptions/forecast | Get forecast snapshot for a given account
-[**SubscriptionsControllerGetSubscription**](DynatracePlatformSubscriptionAPI.md#SubscriptionsControllerGetSubscription) | **Get** /sub/v2/accounts/{accountUuid}/subscriptions/{subscriptionUuid} | Get specific subscription by uuid
-[**SubscriptionsControllerGetTotalSubscriptionCost**](DynatracePlatformSubscriptionAPI.md#SubscriptionsControllerGetTotalSubscriptionCost) | **Get** /sub/v2/accounts/{accountUuid}/subscriptions/{subscriptionUuid}/cost | Get aggregated cost data grouped by date for a given subscription
-[**SubscriptionsControllerGetTotalSubscriptionUsage**](DynatracePlatformSubscriptionAPI.md#SubscriptionsControllerGetTotalSubscriptionUsage) | **Get** /sub/v2/accounts/{accountUuid}/subscriptions/{subscriptionUuid}/usage | Get aggregated usage data grouped by date for a given subscription
-[**SubscriptionsControllerListSubscriptions**](DynatracePlatformSubscriptionAPI.md#SubscriptionsControllerListSubscriptions) | **Get** /sub/v2/accounts/{accountUuid}/subscriptions | Get list of subscriptions by account uuid
-
-
+| Method                                                                                                                                       | HTTP request                                                                               | Description                                                        |
+| -------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------ |
+| [**SubscriptionsControllerGetEnvironmentCost**](DynatracePlatformSubscriptionAPI.md#SubscriptionsControllerGetEnvironmentCost)               | **Get** /sub/v2/accounts/{accountUuid}/subscriptions/{subscriptionUuid}/environments/cost  | Get cost summary grouped by environment for a given subscription   |
+| [**SubscriptionsControllerGetEnvironmentUsage**](DynatracePlatformSubscriptionAPI.md#SubscriptionsControllerGetEnvironmentUsage)             | **Get** /sub/v2/accounts/{accountUuid}/subscriptions/{subscriptionUuid}/environments/usage | Get usage summary grouped by environment for a given subscription  |
+| [**SubscriptionsControllerGetEvents**](DynatracePlatformSubscriptionAPI.md#SubscriptionsControllerGetEvents)                                 | **Get** /sub/v2/accounts/{accountUuid}/subscriptions/events                                | Get all notification events for a given subscription               |
+| [**SubscriptionsControllerGetForecast**](DynatracePlatformSubscriptionAPI.md#SubscriptionsControllerGetForecast)                             | **Get** /sub/v2/accounts/{accountUuid}/subscriptions/forecast                              | Get forecast snapshot for a given account                          |
+| [**SubscriptionsControllerGetSubscription**](DynatracePlatformSubscriptionAPI.md#SubscriptionsControllerGetSubscription)                     | **Get** /sub/v2/accounts/{accountUuid}/subscriptions/{subscriptionUuid}                    | Get specific subscription by uuid                                  |
+| [**SubscriptionsControllerGetTotalSubscriptionCost**](DynatracePlatformSubscriptionAPI.md#SubscriptionsControllerGetTotalSubscriptionCost)   | **Get** /sub/v2/accounts/{accountUuid}/subscriptions/{subscriptionUuid}/cost               | Get aggregated cost data grouped by date for a given subscription  |
+| [**SubscriptionsControllerGetTotalSubscriptionUsage**](DynatracePlatformSubscriptionAPI.md#SubscriptionsControllerGetTotalSubscriptionUsage) | **Get** /sub/v2/accounts/{accountUuid}/subscriptions/{subscriptionUuid}/usage              | Get aggregated usage data grouped by date for a given subscription |
+| [**SubscriptionsControllerListSubscriptions**](DynatracePlatformSubscriptionAPI.md#SubscriptionsControllerListSubscriptions)                 | **Get** /sub/v2/accounts/{accountUuid}/subscriptions                                       | Get list of subscriptions by account uuid                          |
 
 ## SubscriptionsControllerGetEnvironmentCost
 
@@ -31,7 +29,7 @@ import (
     "fmt"
     "os"
     "time"
-    openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+    openapiclient "github.com/LeeShan87/dynatrace-account-inventory/generated/account"
 )
 
 func main() {
@@ -56,26 +54,23 @@ func main() {
 
 ### Path Parameters
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**accountUuid** | **string** | The ID of the required account.    You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. | 
-**subscriptionUuid** | **string** | The UUID of the requested subscription | 
+| Name                 | Type                | Description                                                                                                                                    | Notes |
+| -------------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| **ctx**              | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.                                                                    |
+| **accountUuid**      | **string**          | The ID of the required account. You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. |
+| **subscriptionUuid** | **string**          | The UUID of the requested subscription                                                                                                         |
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiSubscriptionsControllerGetEnvironmentCostRequest struct via the builder pattern
 
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
- **startTime** | **time.Time** | Date as ISO string | 
- **endTime** | **time.Time** | Date as ISO string | 
- **environmentIds** | **[]string** |  | 
- **capabilityKeys** | **[]string** |  | 
+**startTime** | **time.Time** | Date as ISO string |
+**endTime** | **time.Time** | Date as ISO string |
+**environmentIds** | **[]string** | |
+**capabilityKeys** | **[]string** | |
 
 ### Return type
 
@@ -94,7 +89,6 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## SubscriptionsControllerGetEnvironmentUsage
 
 > SubscriptionEnvironmentUsageListDto SubscriptionsControllerGetEnvironmentUsage(ctx, accountUuid, subscriptionUuid).StartTime(startTime).EndTime(endTime).EnvironmentIds(environmentIds).CapabilityKeys(capabilityKeys).Execute()
@@ -111,7 +105,7 @@ import (
     "fmt"
     "os"
     "time"
-    openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+    openapiclient "github.com/LeeShan87/dynatrace-account-inventory/generated/account"
 )
 
 func main() {
@@ -136,26 +130,23 @@ func main() {
 
 ### Path Parameters
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**accountUuid** | **string** | The ID of the required account.    You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. | 
-**subscriptionUuid** | **string** | The UUID of the requested subscription | 
+| Name                 | Type                | Description                                                                                                                                    | Notes |
+| -------------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| **ctx**              | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.                                                                    |
+| **accountUuid**      | **string**          | The ID of the required account. You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. |
+| **subscriptionUuid** | **string**          | The UUID of the requested subscription                                                                                                         |
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiSubscriptionsControllerGetEnvironmentUsageRequest struct via the builder pattern
 
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
- **startTime** | **time.Time** | Date as ISO string | 
- **endTime** | **time.Time** | Date as ISO string | 
- **environmentIds** | **[]string** |  | 
- **capabilityKeys** | **[]string** |  | 
+**startTime** | **time.Time** | Date as ISO string |
+**endTime** | **time.Time** | Date as ISO string |
+**environmentIds** | **[]string** | |
+**capabilityKeys** | **[]string** | |
 
 ### Return type
 
@@ -174,7 +165,6 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## SubscriptionsControllerGetEvents
 
 > []Event SubscriptionsControllerGetEvents(ctx, accountUuid).StartTime(startTime).EndTime(endTime).EventType(eventType).Execute()
@@ -191,7 +181,7 @@ import (
     "fmt"
     "os"
     "time"
-    openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+    openapiclient "github.com/LeeShan87/dynatrace-account-inventory/generated/account"
 )
 
 func main() {
@@ -214,23 +204,21 @@ func main() {
 
 ### Path Parameters
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**accountUuid** | **string** | The ID of the required account.    You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. | 
+| Name            | Type                | Description                                                                                                                                    | Notes |
+| --------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| **ctx**         | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.                                                                    |
+| **accountUuid** | **string**          | The ID of the required account. You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. |
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiSubscriptionsControllerGetEventsRequest struct via the builder pattern
 
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
- **startTime** | **time.Time** | Date as ISO string | 
- **endTime** | **time.Time** | Date as ISO string | 
- **eventType** | **string** |  | 
+**startTime** | **time.Time** | Date as ISO string |
+**endTime** | **time.Time** | Date as ISO string |
+**eventType** | **string** | |
 
 ### Return type
 
@@ -249,7 +237,6 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## SubscriptionsControllerGetForecast
 
 > Forecast SubscriptionsControllerGetForecast(ctx, accountUuid).Execute()
@@ -265,7 +252,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+    openapiclient "github.com/LeeShan87/dynatrace-account-inventory/generated/account"
 )
 
 func main() {
@@ -285,20 +272,17 @@ func main() {
 
 ### Path Parameters
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**accountUuid** | **string** | The ID of the required account.    You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. | 
+| Name            | Type                | Description                                                                                                                                    | Notes |
+| --------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| **ctx**         | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.                                                                    |
+| **accountUuid** | **string**          | The ID of the required account. You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. |
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiSubscriptionsControllerGetForecastRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
 
 ### Return type
 
@@ -317,7 +301,6 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## SubscriptionsControllerGetSubscription
 
 > SubscriptionDto SubscriptionsControllerGetSubscription(ctx, accountUuid, subscriptionUuid).Execute()
@@ -333,7 +316,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+    openapiclient "github.com/LeeShan87/dynatrace-account-inventory/generated/account"
 )
 
 func main() {
@@ -354,22 +337,18 @@ func main() {
 
 ### Path Parameters
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**accountUuid** | **string** | The ID of the required account.    You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. | 
-**subscriptionUuid** | **string** | The UUID of the requested subscription | 
+| Name                 | Type                | Description                                                                                                                                    | Notes |
+| -------------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| **ctx**              | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.                                                                    |
+| **accountUuid**      | **string**          | The ID of the required account. You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. |
+| **subscriptionUuid** | **string**          | The UUID of the requested subscription                                                                                                         |
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiSubscriptionsControllerGetSubscriptionRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
 
 ### Return type
 
@@ -388,7 +367,6 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## SubscriptionsControllerGetTotalSubscriptionCost
 
 > SubscriptionCostListDto SubscriptionsControllerGetTotalSubscriptionCost(ctx, accountUuid, subscriptionUuid).EnvironmentIds(environmentIds).CapabilityKeys(capabilityKeys).Execute()
@@ -404,7 +382,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+    openapiclient "github.com/LeeShan87/dynatrace-account-inventory/generated/account"
 )
 
 func main() {
@@ -427,24 +405,21 @@ func main() {
 
 ### Path Parameters
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**accountUuid** | **string** | The ID of the required account.    You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. | 
-**subscriptionUuid** | **string** | The UUID of the requested subscription | 
+| Name                 | Type                | Description                                                                                                                                    | Notes |
+| -------------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| **ctx**              | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.                                                                    |
+| **accountUuid**      | **string**          | The ID of the required account. You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. |
+| **subscriptionUuid** | **string**          | The UUID of the requested subscription                                                                                                         |
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiSubscriptionsControllerGetTotalSubscriptionCostRequest struct via the builder pattern
 
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
- **environmentIds** | **[]string** |  | 
- **capabilityKeys** | **[]string** |  | 
+**environmentIds** | **[]string** | |
+**capabilityKeys** | **[]string** | |
 
 ### Return type
 
@@ -463,7 +438,6 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## SubscriptionsControllerGetTotalSubscriptionUsage
 
 > SubscriptionUsageListDto SubscriptionsControllerGetTotalSubscriptionUsage(ctx, accountUuid, subscriptionUuid).EnvironmentIds(environmentIds).CapabilityKeys(capabilityKeys).Execute()
@@ -479,7 +453,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+    openapiclient "github.com/LeeShan87/dynatrace-account-inventory/generated/account"
 )
 
 func main() {
@@ -502,24 +476,21 @@ func main() {
 
 ### Path Parameters
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**accountUuid** | **string** | The ID of the required account.    You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. | 
-**subscriptionUuid** | **string** | The UUID of the requested subscription | 
+| Name                 | Type                | Description                                                                                                                                    | Notes |
+| -------------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| **ctx**              | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.                                                                    |
+| **accountUuid**      | **string**          | The ID of the required account. You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. |
+| **subscriptionUuid** | **string**          | The UUID of the requested subscription                                                                                                         |
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiSubscriptionsControllerGetTotalSubscriptionUsageRequest struct via the builder pattern
 
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
- **environmentIds** | **[]string** |  | 
- **capabilityKeys** | **[]string** |  | 
+**environmentIds** | **[]string** | |
+**capabilityKeys** | **[]string** | |
 
 ### Return type
 
@@ -538,7 +509,6 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## SubscriptionsControllerListSubscriptions
 
 > SubscriptionListDto SubscriptionsControllerListSubscriptions(ctx, accountUuid).Execute()
@@ -554,7 +524,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+    openapiclient "github.com/LeeShan87/dynatrace-account-inventory/generated/account"
 )
 
 func main() {
@@ -574,20 +544,17 @@ func main() {
 
 ### Path Parameters
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**accountUuid** | **string** | The ID of the required account.    You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. | 
+| Name            | Type                | Description                                                                                                                                    | Notes |
+| --------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| **ctx**         | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.                                                                    |
+| **accountUuid** | **string**          | The ID of the required account. You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. |
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiSubscriptionsControllerListSubscriptionsRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
 
 ### Return type
 
@@ -605,4 +572,3 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
-

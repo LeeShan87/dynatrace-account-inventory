@@ -1,14 +1,12 @@
 # \ServiceUserManagementAPI
 
-All URIs are relative to *http://localhost*
+All URIs are relative to _http://localhost_
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**ServiceUsersControllerCreateServiceUserForAccount**](ServiceUserManagementAPI.md#ServiceUsersControllerCreateServiceUserForAccount) | **Post** /iam/v1/accounts/{accountUuid}/service-users | Creates a new service user in an account
-[**ServiceUsersControllerDeleteUser**](ServiceUserManagementAPI.md#ServiceUsersControllerDeleteUser) | **Delete** /iam/v1/accounts/{accountUuid}/service-users/{userUuid} | Removes service user
-[**ServiceUsersControllerGetServiceUsersFromAccount**](ServiceUserManagementAPI.md#ServiceUsersControllerGetServiceUsersFromAccount) | **Get** /iam/v1/accounts/{accountUuid}/service-users | Get service users assigned to account
-
-
+| Method                                                                                                                                 | HTTP request                                                       | Description                              |
+| -------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ | ---------------------------------------- |
+| [**ServiceUsersControllerCreateServiceUserForAccount**](ServiceUserManagementAPI.md#ServiceUsersControllerCreateServiceUserForAccount) | **Post** /iam/v1/accounts/{accountUuid}/service-users              | Creates a new service user in an account |
+| [**ServiceUsersControllerDeleteUser**](ServiceUserManagementAPI.md#ServiceUsersControllerDeleteUser)                                   | **Delete** /iam/v1/accounts/{accountUuid}/service-users/{userUuid} | Removes service user                     |
+| [**ServiceUsersControllerGetServiceUsersFromAccount**](ServiceUserManagementAPI.md#ServiceUsersControllerGetServiceUsersFromAccount)   | **Get** /iam/v1/accounts/{accountUuid}/service-users               | Get service users assigned to account    |
 
 ## ServiceUsersControllerCreateServiceUserForAccount
 
@@ -25,7 +23,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+    openapiclient "github.com/LeeShan87/dynatrace-account-inventory/generated/account"
 )
 
 func main() {
@@ -46,21 +44,19 @@ func main() {
 
 ### Path Parameters
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**accountUuid** | **string** | The ID of the required account.    You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. | 
+| Name            | Type                | Description                                                                                                                                    | Notes |
+| --------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| **ctx**         | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.                                                                    |
+| **accountUuid** | **string**          | The ID of the required account. You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. |
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiServiceUsersControllerCreateServiceUserForAccountRequest struct via the builder pattern
 
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
- **serviceUserNameDto** | [**ServiceUserNameDto**](ServiceUserNameDto.md) | The JSON body of the request. Contains the name of the new service user. | 
+**serviceUserNameDto** | [**ServiceUserNameDto**](ServiceUserNameDto.md) | The JSON body of the request. Contains the name of the new service user. |
 
 ### Return type
 
@@ -79,7 +75,6 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## ServiceUsersControllerDeleteUser
 
 > ServiceUsersControllerDeleteUser(ctx, accountUuid, userUuid).Execute()
@@ -95,7 +90,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+    openapiclient "github.com/LeeShan87/dynatrace-account-inventory/generated/account"
 )
 
 func main() {
@@ -114,26 +109,22 @@ func main() {
 
 ### Path Parameters
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**accountUuid** | **string** | The ID of the required account.    You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. | 
-**userUuid** | **string** | The UUID of the required user. | 
+| Name            | Type                | Description                                                                                                                                    | Notes |
+| --------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| **ctx**         | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.                                                                    |
+| **accountUuid** | **string**          | The ID of the required account. You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. |
+| **userUuid**    | **string**          | The UUID of the required user.                                                                                                                 |
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiServiceUsersControllerDeleteUserRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
 
 ### Return type
 
- (empty response body)
+(empty response body)
 
 ### Authorization
 
@@ -147,7 +138,6 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
-
 
 ## ServiceUsersControllerGetServiceUsersFromAccount
 
@@ -164,7 +154,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+    openapiclient "github.com/LeeShan87/dynatrace-account-inventory/generated/account"
 )
 
 func main() {
@@ -184,20 +174,17 @@ func main() {
 
 ### Path Parameters
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**accountUuid** | **string** | The ID of the required account.    You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. | 
+| Name            | Type                | Description                                                                                                                                    | Notes |
+| --------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| **ctx**         | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.                                                                    |
+| **accountUuid** | **string**          | The ID of the required account. You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. |
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiServiceUsersControllerGetServiceUsersFromAccountRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
 
 ### Return type
 
@@ -215,4 +202,3 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
-

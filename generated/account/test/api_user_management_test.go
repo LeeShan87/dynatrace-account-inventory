@@ -11,10 +11,11 @@ package account
 
 import (
 	"context"
+	"testing"
+
+	openapiclient "github.com/LeeShan87/dynatrace-account-inventory/generated/account"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
 )
 
 func Test_account_UserManagementAPIService(t *testing.T) {
@@ -24,7 +25,7 @@ func Test_account_UserManagementAPIService(t *testing.T) {
 
 	t.Run("Test UserManagementAPIService UsersControllerAddUserToGroups", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var accountUuid string
 		var email string
@@ -38,7 +39,7 @@ func Test_account_UserManagementAPIService(t *testing.T) {
 
 	t.Run("Test UserManagementAPIService UsersControllerCreateUserForAccount", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var accountUuid string
 
@@ -51,7 +52,7 @@ func Test_account_UserManagementAPIService(t *testing.T) {
 
 	t.Run("Test UserManagementAPIService UsersControllerGetUserGroups", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var accountUuid string
 		var email string
@@ -66,7 +67,7 @@ func Test_account_UserManagementAPIService(t *testing.T) {
 
 	t.Run("Test UserManagementAPIService UsersControllerGetUsers", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var accountUuid string
 
@@ -80,7 +81,7 @@ func Test_account_UserManagementAPIService(t *testing.T) {
 
 	t.Run("Test UserManagementAPIService UsersControllerRemoveUserFromAccount", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var accountUuid string
 		var email string
@@ -94,7 +95,7 @@ func Test_account_UserManagementAPIService(t *testing.T) {
 
 	t.Run("Test UserManagementAPIService UsersControllerRemoveUserFromGroups", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var accountUuid string
 		var email string
@@ -108,7 +109,7 @@ func Test_account_UserManagementAPIService(t *testing.T) {
 
 	t.Run("Test UserManagementAPIService UsersControllerReplaceUserGroups", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var accountUuid string
 		var email string

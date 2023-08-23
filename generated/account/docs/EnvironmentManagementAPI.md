@@ -1,12 +1,10 @@
 # \EnvironmentManagementAPI
 
-All URIs are relative to *http://localhost*
+All URIs are relative to _http://localhost_
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**EnvironmentResourcesControllerGetEnvironmentResources**](EnvironmentManagementAPI.md#EnvironmentResourcesControllerGetEnvironmentResources) | **Get** /env/v1/accounts/{accountUuid}/environments | Lists all environments and management zones of an account
-
-
+| Method                                                                                                                                         | HTTP request                                        | Description                                               |
+| ---------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- | --------------------------------------------------------- |
+| [**EnvironmentResourcesControllerGetEnvironmentResources**](EnvironmentManagementAPI.md#EnvironmentResourcesControllerGetEnvironmentResources) | **Get** /env/v1/accounts/{accountUuid}/environments | Lists all environments and management zones of an account |
 
 ## EnvironmentResourcesControllerGetEnvironmentResources
 
@@ -23,7 +21,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+    openapiclient "github.com/LeeShan87/dynatrace-account-inventory/generated/account"
 )
 
 func main() {
@@ -43,20 +41,17 @@ func main() {
 
 ### Path Parameters
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**accountUuid** | **string** | The ID of the required account.    You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. | 
+| Name            | Type                | Description                                                                                                                                    | Notes |
+| --------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| **ctx**         | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.                                                                    |
+| **accountUuid** | **string**          | The ID of the required account. You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. |
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiEnvironmentResourcesControllerGetEnvironmentResourcesRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
 
 ### Return type
 
@@ -74,4 +69,3 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
-

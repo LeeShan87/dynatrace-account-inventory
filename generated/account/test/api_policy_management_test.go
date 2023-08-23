@@ -11,10 +11,11 @@ package account
 
 import (
 	"context"
+	"testing"
+
+	openapiclient "github.com/LeeShan87/dynatrace-account-inventory/generated/account"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
 )
 
 func Test_account_PolicyManagementAPIService(t *testing.T) {
@@ -24,7 +25,7 @@ func Test_account_PolicyManagementAPIService(t *testing.T) {
 
 	t.Run("Test PolicyManagementAPIService PolicyControllerAppendLevelPolicyBindings", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var levelType string
 		var levelId string
@@ -39,7 +40,7 @@ func Test_account_PolicyManagementAPIService(t *testing.T) {
 
 	t.Run("Test PolicyManagementAPIService PolicyControllerAppendParticularGroupBinding", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var levelType string
 		var levelId string
@@ -55,7 +56,7 @@ func Test_account_PolicyManagementAPIService(t *testing.T) {
 
 	t.Run("Test PolicyManagementAPIService PolicyControllerCreateLevelPolicy", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var levelType string
 		var levelId string
@@ -70,7 +71,7 @@ func Test_account_PolicyManagementAPIService(t *testing.T) {
 
 	t.Run("Test PolicyManagementAPIService PolicyControllerDeleteLevelPolicy", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var levelType string
 		var levelId string
@@ -86,7 +87,7 @@ func Test_account_PolicyManagementAPIService(t *testing.T) {
 
 	t.Run("Test PolicyManagementAPIService PolicyControllerDeleteLevelPolicyBindings", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var levelType string
 		var levelId string
@@ -100,7 +101,7 @@ func Test_account_PolicyManagementAPIService(t *testing.T) {
 
 	t.Run("Test PolicyManagementAPIService PolicyControllerDeleteLevelPolicyBindingsForPolicy", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var levelType string
 		var levelId string
@@ -115,7 +116,7 @@ func Test_account_PolicyManagementAPIService(t *testing.T) {
 
 	t.Run("Test PolicyManagementAPIService PolicyControllerDeleteLevelPolicyBindingsForPolicyAndGroup", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var levelType string
 		var levelId string
@@ -132,7 +133,7 @@ func Test_account_PolicyManagementAPIService(t *testing.T) {
 
 	t.Run("Test PolicyManagementAPIService PolicyControllerGetAllLevelPoliciesBindings", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var levelType string
 		var levelId string
@@ -147,7 +148,7 @@ func Test_account_PolicyManagementAPIService(t *testing.T) {
 
 	t.Run("Test PolicyManagementAPIService PolicyControllerGetEffectivePermissions", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var levelType string
 		var levelId string
@@ -162,7 +163,7 @@ func Test_account_PolicyManagementAPIService(t *testing.T) {
 
 	t.Run("Test PolicyManagementAPIService PolicyControllerGetLevelDescendantsPolicyBindings", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var levelType string
 		var levelId string
@@ -177,7 +178,7 @@ func Test_account_PolicyManagementAPIService(t *testing.T) {
 
 	t.Run("Test PolicyManagementAPIService PolicyControllerGetLevelPolicies", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var levelType string
 		var levelId string
@@ -192,7 +193,7 @@ func Test_account_PolicyManagementAPIService(t *testing.T) {
 
 	t.Run("Test PolicyManagementAPIService PolicyControllerGetLevelPolicy", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var levelType string
 		var levelId string
@@ -208,7 +209,7 @@ func Test_account_PolicyManagementAPIService(t *testing.T) {
 
 	t.Run("Test PolicyManagementAPIService PolicyControllerGetLevelPolicyBindings", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var levelType string
 		var levelId string
@@ -223,7 +224,7 @@ func Test_account_PolicyManagementAPIService(t *testing.T) {
 
 	t.Run("Test PolicyManagementAPIService PolicyControllerGetLevelPolicyBindingsForGroup", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var levelType string
 		var levelId string
@@ -239,7 +240,7 @@ func Test_account_PolicyManagementAPIService(t *testing.T) {
 
 	t.Run("Test PolicyManagementAPIService PolicyControllerGetPolicyOverviewList", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var levelType string
 		var levelId string
@@ -254,7 +255,7 @@ func Test_account_PolicyManagementAPIService(t *testing.T) {
 
 	t.Run("Test PolicyManagementAPIService PolicyControllerGetPolicyUuidsBindings", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var levelType string
 		var levelId string
@@ -270,7 +271,7 @@ func Test_account_PolicyManagementAPIService(t *testing.T) {
 
 	t.Run("Test PolicyManagementAPIService PolicyControllerUpdateLevelPolicy", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var levelType string
 		var levelId string
@@ -286,7 +287,7 @@ func Test_account_PolicyManagementAPIService(t *testing.T) {
 
 	t.Run("Test PolicyManagementAPIService PolicyControllerUpdateLevelPolicyBindings", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var levelType string
 		var levelId string
@@ -300,7 +301,7 @@ func Test_account_PolicyManagementAPIService(t *testing.T) {
 
 	t.Run("Test PolicyManagementAPIService PolicyControllerUpdatePolicyBindingsToGroup", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var levelType string
 		var levelId string
@@ -315,7 +316,7 @@ func Test_account_PolicyManagementAPIService(t *testing.T) {
 
 	t.Run("Test PolicyManagementAPIService PolicyControllerValidateLevelPolicy", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var levelType string
 		var levelId string
@@ -331,7 +332,7 @@ func Test_account_PolicyManagementAPIService(t *testing.T) {
 
 	t.Run("Test PolicyManagementAPIService PolicyControllerValidateNewLevelPolicy", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var levelType string
 		var levelId string

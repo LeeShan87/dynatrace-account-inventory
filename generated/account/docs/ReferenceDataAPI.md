@@ -1,14 +1,12 @@
 # \ReferenceDataAPI
 
-All URIs are relative to *http://localhost*
+All URIs are relative to _http://localhost_
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**ReferenceDataControllerGetPermissions**](ReferenceDataAPI.md#ReferenceDataControllerGetPermissions) | **Get** /ref/v1/account/permissions | Lists all available permissions
-[**ReferenceDataControllerGetRegions**](ReferenceDataAPI.md#ReferenceDataControllerGetRegions) | **Get** /ref/v1/regions | Lists all available regions
-[**ReferenceDataControllerGetTimezones**](ReferenceDataAPI.md#ReferenceDataControllerGetTimezones) | **Get** /ref/v1/time-zones | Lists all available time zones
-
-
+| Method                                                                                                 | HTTP request                        | Description                     |
+| ------------------------------------------------------------------------------------------------------ | ----------------------------------- | ------------------------------- |
+| [**ReferenceDataControllerGetPermissions**](ReferenceDataAPI.md#ReferenceDataControllerGetPermissions) | **Get** /ref/v1/account/permissions | Lists all available permissions |
+| [**ReferenceDataControllerGetRegions**](ReferenceDataAPI.md#ReferenceDataControllerGetRegions)         | **Get** /ref/v1/regions             | Lists all available regions     |
+| [**ReferenceDataControllerGetTimezones**](ReferenceDataAPI.md#ReferenceDataControllerGetTimezones)     | **Get** /ref/v1/time-zones          | Lists all available time zones  |
 
 ## ReferenceDataControllerGetPermissions
 
@@ -25,7 +23,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+    openapiclient "github.com/LeeShan87/dynatrace-account-inventory/generated/account"
 )
 
 func main() {
@@ -50,7 +48,6 @@ This endpoint does not need any parameter.
 
 Other parameters are passed through a pointer to a apiReferenceDataControllerGetPermissionsRequest struct via the builder pattern
 
-
 ### Return type
 
 [**[]PermissionDto**](PermissionDto.md)
@@ -68,7 +65,6 @@ Other parameters are passed through a pointer to a apiReferenceDataControllerGet
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## ReferenceDataControllerGetRegions
 
 > []RegionDto ReferenceDataControllerGetRegions(ctx).Execute()
@@ -84,7 +80,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+    openapiclient "github.com/LeeShan87/dynatrace-account-inventory/generated/account"
 )
 
 func main() {
@@ -109,7 +105,6 @@ This endpoint does not need any parameter.
 
 Other parameters are passed through a pointer to a apiReferenceDataControllerGetRegionsRequest struct via the builder pattern
 
-
 ### Return type
 
 [**[]RegionDto**](RegionDto.md)
@@ -127,7 +122,6 @@ Other parameters are passed through a pointer to a apiReferenceDataControllerGet
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## ReferenceDataControllerGetTimezones
 
 > []TimeZoneDto ReferenceDataControllerGetTimezones(ctx).Execute()
@@ -143,7 +137,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+    openapiclient "github.com/LeeShan87/dynatrace-account-inventory/generated/account"
 )
 
 func main() {
@@ -168,7 +162,6 @@ This endpoint does not need any parameter.
 
 Other parameters are passed through a pointer to a apiReferenceDataControllerGetTimezonesRequest struct via the builder pattern
 
-
 ### Return type
 
 [**[]TimeZoneDto**](TimeZoneDto.md)
@@ -185,4 +178,3 @@ Other parameters are passed through a pointer to a apiReferenceDataControllerGet
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
-

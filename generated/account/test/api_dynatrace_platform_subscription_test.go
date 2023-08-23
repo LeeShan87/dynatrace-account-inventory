@@ -11,10 +11,11 @@ package account
 
 import (
 	"context"
+	"testing"
+
+	openapiclient "github.com/LeeShan87/dynatrace-account-inventory/generated/account"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
 )
 
 func Test_account_DynatracePlatformSubscriptionAPIService(t *testing.T) {
@@ -24,7 +25,7 @@ func Test_account_DynatracePlatformSubscriptionAPIService(t *testing.T) {
 
 	t.Run("Test DynatracePlatformSubscriptionAPIService SubscriptionsControllerGetEnvironmentCost", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var accountUuid string
 		var subscriptionUuid string
@@ -39,7 +40,7 @@ func Test_account_DynatracePlatformSubscriptionAPIService(t *testing.T) {
 
 	t.Run("Test DynatracePlatformSubscriptionAPIService SubscriptionsControllerGetEnvironmentUsage", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var accountUuid string
 		var subscriptionUuid string
@@ -54,7 +55,7 @@ func Test_account_DynatracePlatformSubscriptionAPIService(t *testing.T) {
 
 	t.Run("Test DynatracePlatformSubscriptionAPIService SubscriptionsControllerGetEvents", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var accountUuid string
 
@@ -68,7 +69,7 @@ func Test_account_DynatracePlatformSubscriptionAPIService(t *testing.T) {
 
 	t.Run("Test DynatracePlatformSubscriptionAPIService SubscriptionsControllerGetForecast", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var accountUuid string
 
@@ -82,7 +83,7 @@ func Test_account_DynatracePlatformSubscriptionAPIService(t *testing.T) {
 
 	t.Run("Test DynatracePlatformSubscriptionAPIService SubscriptionsControllerGetSubscription", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var accountUuid string
 		var subscriptionUuid string
@@ -97,7 +98,7 @@ func Test_account_DynatracePlatformSubscriptionAPIService(t *testing.T) {
 
 	t.Run("Test DynatracePlatformSubscriptionAPIService SubscriptionsControllerGetTotalSubscriptionCost", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var accountUuid string
 		var subscriptionUuid string
@@ -112,7 +113,7 @@ func Test_account_DynatracePlatformSubscriptionAPIService(t *testing.T) {
 
 	t.Run("Test DynatracePlatformSubscriptionAPIService SubscriptionsControllerGetTotalSubscriptionUsage", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var accountUuid string
 		var subscriptionUuid string
@@ -127,7 +128,7 @@ func Test_account_DynatracePlatformSubscriptionAPIService(t *testing.T) {
 
 	t.Run("Test DynatracePlatformSubscriptionAPIService SubscriptionsControllerListSubscriptions", func(t *testing.T) {
 
-		t.Skip("skip test")  // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		var accountUuid string
 

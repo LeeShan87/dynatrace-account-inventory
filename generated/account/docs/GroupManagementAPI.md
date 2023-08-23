@@ -1,16 +1,14 @@
 # \GroupManagementAPI
 
-All URIs are relative to *http://localhost*
+All URIs are relative to _http://localhost_
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**GroupsControllerCreateGroups**](GroupManagementAPI.md#GroupsControllerCreateGroups) | **Post** /iam/v1/accounts/{accountUuid}/groups | Creates new user groups
-[**GroupsControllerDeleteGroup**](GroupManagementAPI.md#GroupsControllerDeleteGroup) | **Delete** /iam/v1/accounts/{accountUuid}/groups/{groupUuid} | Deletes a user group
-[**GroupsControllerEditGroup**](GroupManagementAPI.md#GroupsControllerEditGroup) | **Put** /iam/v1/accounts/{accountUuid}/groups/{groupUuid} | Edits a user group
-[**GroupsControllerGetGroups**](GroupManagementAPI.md#GroupsControllerGetGroups) | **Get** /iam/v1/accounts/{accountUuid}/groups | Lists all user groups of an account
-[**GroupsControllerGetUsersForGroup**](GroupManagementAPI.md#GroupsControllerGetUsersForGroup) | **Get** /iam/v1/accounts/{accountUuid}/groups/{groupUuid}/users | Lists all members of a group
-
-
+| Method                                                                                         | HTTP request                                                    | Description                         |
+| ---------------------------------------------------------------------------------------------- | --------------------------------------------------------------- | ----------------------------------- |
+| [**GroupsControllerCreateGroups**](GroupManagementAPI.md#GroupsControllerCreateGroups)         | **Post** /iam/v1/accounts/{accountUuid}/groups                  | Creates new user groups             |
+| [**GroupsControllerDeleteGroup**](GroupManagementAPI.md#GroupsControllerDeleteGroup)           | **Delete** /iam/v1/accounts/{accountUuid}/groups/{groupUuid}    | Deletes a user group                |
+| [**GroupsControllerEditGroup**](GroupManagementAPI.md#GroupsControllerEditGroup)               | **Put** /iam/v1/accounts/{accountUuid}/groups/{groupUuid}       | Edits a user group                  |
+| [**GroupsControllerGetGroups**](GroupManagementAPI.md#GroupsControllerGetGroups)               | **Get** /iam/v1/accounts/{accountUuid}/groups                   | Lists all user groups of an account |
+| [**GroupsControllerGetUsersForGroup**](GroupManagementAPI.md#GroupsControllerGetUsersForGroup) | **Get** /iam/v1/accounts/{accountUuid}/groups/{groupUuid}/users | Lists all members of a group        |
 
 ## GroupsControllerCreateGroups
 
@@ -27,12 +25,12 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+    openapiclient "github.com/LeeShan87/dynatrace-account-inventory/generated/account"
 )
 
 func main() {
     accountUuid := "accountUuid_example" // string | The ID of the required account.    You can find the UUID on the **Account > Account management API** page, during creation of an OAuth client.
-    putGroupDto := []openapiclient.PutGroupDto{*openapiclient.NewPutGroupDto("Name_example")} // []PutGroupDto | The body of the request. Contains a list of configurations for new groups.    Do not specify a UUID. A UUID is assigned automatically by Dynatrace. 
+    putGroupDto := []openapiclient.PutGroupDto{*openapiclient.NewPutGroupDto("Name_example")} // []PutGroupDto | The body of the request. Contains a list of configurations for new groups.    Do not specify a UUID. A UUID is assigned automatically by Dynatrace.
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -48,21 +46,19 @@ func main() {
 
 ### Path Parameters
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**accountUuid** | **string** | The ID of the required account.    You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. | 
+| Name            | Type                | Description                                                                                                                                    | Notes |
+| --------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| **ctx**         | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.                                                                    |
+| **accountUuid** | **string**          | The ID of the required account. You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. |
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGroupsControllerCreateGroupsRequest struct via the builder pattern
 
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
- **putGroupDto** | [**[]PutGroupDto**](PutGroupDto.md) | The body of the request. Contains a list of configurations for new groups.    Do not specify a UUID. A UUID is assigned automatically by Dynatrace.  | 
+**putGroupDto** | [**[]PutGroupDto**](PutGroupDto.md) | The body of the request. Contains a list of configurations for new groups. Do not specify a UUID. A UUID is assigned automatically by Dynatrace. |
 
 ### Return type
 
@@ -81,7 +77,6 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GroupsControllerDeleteGroup
 
 > GroupsControllerDeleteGroup(ctx, accountUuid, groupUuid).Execute()
@@ -97,7 +92,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+    openapiclient "github.com/LeeShan87/dynatrace-account-inventory/generated/account"
 )
 
 func main() {
@@ -116,26 +111,22 @@ func main() {
 
 ### Path Parameters
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**accountUuid** | **string** | The ID of the required account.    You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. | 
-**groupUuid** | **string** | The UUID of the required user group. | 
+| Name            | Type                | Description                                                                                                                                    | Notes |
+| --------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| **ctx**         | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.                                                                    |
+| **accountUuid** | **string**          | The ID of the required account. You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. |
+| **groupUuid**   | **string**          | The UUID of the required user group.                                                                                                           |
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGroupsControllerDeleteGroupRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
 
 ### Return type
 
- (empty response body)
+(empty response body)
 
 ### Authorization
 
@@ -149,7 +140,6 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
-
 
 ## GroupsControllerEditGroup
 
@@ -166,7 +156,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+    openapiclient "github.com/LeeShan87/dynatrace-account-inventory/generated/account"
 )
 
 func main() {
@@ -186,27 +176,24 @@ func main() {
 
 ### Path Parameters
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**accountUuid** | **string** | The ID of the required account.    You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. | 
-**groupUuid** | **string** | The UUID of the required user group. | 
+| Name            | Type                | Description                                                                                                                                    | Notes |
+| --------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| **ctx**         | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.                                                                    |
+| **accountUuid** | **string**          | The ID of the required account. You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. |
+| **groupUuid**   | **string**          | The UUID of the required user group.                                                                                                           |
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGroupsControllerEditGroupRequest struct via the builder pattern
 
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
- **putGroupDto** | [**PutGroupDto**](PutGroupDto.md) | The body of the request. Contains the updated parameters of the group.    You can&#39;t change the UUID of the group. | 
+**putGroupDto** | [**PutGroupDto**](PutGroupDto.md) | The body of the request. Contains the updated parameters of the group. You can&#39;t change the UUID of the group. |
 
 ### Return type
 
- (empty response body)
+(empty response body)
 
 ### Authorization
 
@@ -220,7 +207,6 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
-
 
 ## GroupsControllerGetGroups
 
@@ -237,7 +223,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+    openapiclient "github.com/LeeShan87/dynatrace-account-inventory/generated/account"
 )
 
 func main() {
@@ -257,20 +243,17 @@ func main() {
 
 ### Path Parameters
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**accountUuid** | **string** | The ID of the required account.    You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. | 
+| Name            | Type                | Description                                                                                                                                    | Notes |
+| --------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| **ctx**         | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.                                                                    |
+| **accountUuid** | **string**          | The ID of the required account. You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. |
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGroupsControllerGetGroupsRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
 
 ### Return type
 
@@ -289,7 +272,6 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## GroupsControllerGetUsersForGroup
 
 > GroupUserListDto GroupsControllerGetUsersForGroup(ctx, accountUuid, groupUuid).Execute()
@@ -305,7 +287,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+    openapiclient "github.com/LeeShan87/dynatrace-account-inventory/generated/account"
 )
 
 func main() {
@@ -326,22 +308,18 @@ func main() {
 
 ### Path Parameters
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**accountUuid** | **string** | The ID of the required account.    You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. | 
-**groupUuid** | **string** | The UUID of the required user group. | 
+| Name            | Type                | Description                                                                                                                                    | Notes |
+| --------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| **ctx**         | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.                                                                    |
+| **accountUuid** | **string**          | The ID of the required account. You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. |
+| **groupUuid**   | **string**          | The UUID of the required user group.                                                                                                           |
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGroupsControllerGetUsersForGroupRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
 
 ### Return type
 
@@ -359,4 +337,3 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
-

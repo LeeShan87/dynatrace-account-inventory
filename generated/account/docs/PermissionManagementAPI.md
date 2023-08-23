@@ -1,15 +1,13 @@
 # \PermissionManagementAPI
 
-All URIs are relative to *http://localhost*
+All URIs are relative to _http://localhost_
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**PermissionsControllerAddGroupPermissions**](PermissionManagementAPI.md#PermissionsControllerAddGroupPermissions) | **Post** /iam/v1/accounts/{accountUuid}/groups/{groupUuid}/permissions | Assigns permissions to a user group. Existing permissions remain unaffected.
-[**PermissionsControllerGetGroupPermissions**](PermissionManagementAPI.md#PermissionsControllerGetGroupPermissions) | **Get** /iam/v1/accounts/{accountUuid}/groups/{groupUuid}/permissions | Lists all permissions of a user group
-[**PermissionsControllerOverwriteGroupPermissions**](PermissionManagementAPI.md#PermissionsControllerOverwriteGroupPermissions) | **Put** /iam/v1/accounts/{accountUuid}/groups/{groupUuid}/permissions | Sets permissions of a user group. Existing permissions are overwritten.
-[**PermissionsControllerRemoveGroupPermissions**](PermissionManagementAPI.md#PermissionsControllerRemoveGroupPermissions) | **Delete** /iam/v1/accounts/{accountUuid}/groups/{groupUuid}/permissions | Removes a permission from a user group
-
-
+| Method                                                                                                                          | HTTP request                                                             | Description                                                                  |
+| ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ | ---------------------------------------------------------------------------- |
+| [**PermissionsControllerAddGroupPermissions**](PermissionManagementAPI.md#PermissionsControllerAddGroupPermissions)             | **Post** /iam/v1/accounts/{accountUuid}/groups/{groupUuid}/permissions   | Assigns permissions to a user group. Existing permissions remain unaffected. |
+| [**PermissionsControllerGetGroupPermissions**](PermissionManagementAPI.md#PermissionsControllerGetGroupPermissions)             | **Get** /iam/v1/accounts/{accountUuid}/groups/{groupUuid}/permissions    | Lists all permissions of a user group                                        |
+| [**PermissionsControllerOverwriteGroupPermissions**](PermissionManagementAPI.md#PermissionsControllerOverwriteGroupPermissions) | **Put** /iam/v1/accounts/{accountUuid}/groups/{groupUuid}/permissions    | Sets permissions of a user group. Existing permissions are overwritten.      |
+| [**PermissionsControllerRemoveGroupPermissions**](PermissionManagementAPI.md#PermissionsControllerRemoveGroupPermissions)       | **Delete** /iam/v1/accounts/{accountUuid}/groups/{groupUuid}/permissions | Removes a permission from a user group                                       |
 
 ## PermissionsControllerAddGroupPermissions
 
@@ -26,7 +24,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+    openapiclient "github.com/LeeShan87/dynatrace-account-inventory/generated/account"
 )
 
 func main() {
@@ -46,27 +44,24 @@ func main() {
 
 ### Path Parameters
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**accountUuid** | **string** | The ID of the required account.    You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. | 
-**groupUuid** | **string** | The UUID of the required user group. | 
+| Name            | Type                | Description                                                                                                                                    | Notes |
+| --------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| **ctx**         | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.                                                                    |
+| **accountUuid** | **string**          | The ID of the required account. You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. |
+| **groupUuid**   | **string**          | The UUID of the required user group.                                                                                                           |
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiPermissionsControllerAddGroupPermissionsRequest struct via the builder pattern
 
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
- **permissionsDto** | [**[]PermissionsDto**](PermissionsDto.md) | The body of the request. Contains a list of permissions to be assigned to the group.   Existing permissions remain unaffected. | 
+**permissionsDto** | [**[]PermissionsDto**](PermissionsDto.md) | The body of the request. Contains a list of permissions to be assigned to the group. Existing permissions remain unaffected. |
 
 ### Return type
 
- (empty response body)
+(empty response body)
 
 ### Authorization
 
@@ -80,7 +75,6 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
-
 
 ## PermissionsControllerGetGroupPermissions
 
@@ -97,7 +91,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+    openapiclient "github.com/LeeShan87/dynatrace-account-inventory/generated/account"
 )
 
 func main() {
@@ -118,22 +112,18 @@ func main() {
 
 ### Path Parameters
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**accountUuid** | **string** | The ID of the required account.    You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. | 
-**groupUuid** | **string** | The UUID of the required user group. | 
+| Name            | Type                | Description                                                                                                                                    | Notes |
+| --------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| **ctx**         | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.                                                                    |
+| **accountUuid** | **string**          | The ID of the required account. You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. |
+| **groupUuid**   | **string**          | The UUID of the required user group.                                                                                                           |
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiPermissionsControllerGetGroupPermissionsRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
 
 ### Return type
 
@@ -152,7 +142,6 @@ Name | Type | Description  | Notes
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
 
-
 ## PermissionsControllerOverwriteGroupPermissions
 
 > PermissionsControllerOverwriteGroupPermissions(ctx, accountUuid, groupUuid).PermissionsDto(permissionsDto).Execute()
@@ -168,7 +157,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+    openapiclient "github.com/LeeShan87/dynatrace-account-inventory/generated/account"
 )
 
 func main() {
@@ -188,27 +177,24 @@ func main() {
 
 ### Path Parameters
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**accountUuid** | **string** | The ID of the required account.    You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. | 
-**groupUuid** | **string** | The UUID of the required user group. | 
+| Name            | Type                | Description                                                                                                                                    | Notes |
+| --------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| **ctx**         | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.                                                                    |
+| **accountUuid** | **string**          | The ID of the required account. You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. |
+| **groupUuid**   | **string**          | The UUID of the required user group.                                                                                                           |
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiPermissionsControllerOverwriteGroupPermissionsRequest struct via the builder pattern
 
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
- **permissionsDto** | [**[]PermissionsDto**](PermissionsDto.md) | The body of the request. Contains a list of permissions to be assigned to the group.    Existing permissions are overwritten. | 
+**permissionsDto** | [**[]PermissionsDto**](PermissionsDto.md) | The body of the request. Contains a list of permissions to be assigned to the group. Existing permissions are overwritten. |
 
 ### Return type
 
- (empty response body)
+(empty response body)
 
 ### Authorization
 
@@ -222,7 +208,6 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
-
 
 ## PermissionsControllerRemoveGroupPermissions
 
@@ -239,7 +224,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+    openapiclient "github.com/LeeShan87/dynatrace-account-inventory/generated/account"
 )
 
 func main() {
@@ -261,29 +246,26 @@ func main() {
 
 ### Path Parameters
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**accountUuid** | **string** | The ID of the required account.    You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. | 
-**groupUuid** | **string** | The UUID of the required user group. | 
+| Name            | Type                | Description                                                                                                                                    | Notes |
+| --------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| **ctx**         | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.                                                                    |
+| **accountUuid** | **string**          | The ID of the required account. You can find the UUID on the **Account &gt; Account management API** page, during creation of an OAuth client. |
+| **groupUuid**   | **string**          | The UUID of the required user group.                                                                                                           |
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiPermissionsControllerRemoveGroupPermissionsRequest struct via the builder pattern
 
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
- **scope** | **string** | The scope of the permission to be deleted. Depending on the type of the scope, specify one of the following:    * &#x60;account&#x60;: The UUID of the account.  * &#x60;tenant&#x60;: The ID of the environment.  * &#x60;management-zone&#x60;: The ID of the management zone from an environment in &#x60;{environment-id}:{management-zone-id}&#x60; format. | 
- **permissionName** | **string** | The name of the permission to be deleted. | 
- **scopeType** | **string** | The scope type of the permission to be deleted. | 
+**scope** | **string** | The scope of the permission to be deleted. Depending on the type of the scope, specify one of the following: _ &#x60;account&#x60;: The UUID of the account. _ &#x60;tenant&#x60;: The ID of the environment. \* &#x60;management-zone&#x60;: The ID of the management zone from an environment in &#x60;{environment-id}:{management-zone-id}&#x60; format. |
+**permissionName** | **string** | The name of the permission to be deleted. |
+**scopeType** | **string** | The scope type of the permission to be deleted. |
 
 ### Return type
 
- (empty response body)
+(empty response body)
 
 ### Authorization
 
@@ -297,4 +279,3 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to README]](../README.md)
-
