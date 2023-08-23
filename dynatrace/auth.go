@@ -33,7 +33,7 @@ func init() {
 	clientID = os.Getenv("AOA_CLIENT")
 	secret = os.Getenv("AOA_SECRET")
 	scopes = os.Getenv("TOKEN_SCOPE")
-	accountID = os.Getenv("ACOUNT_ID")
+	accountID = os.Getenv("ACCOUNT_ID")
 	resource = "urn:dtaccount:" + accountID
 }
 

@@ -20,7 +20,7 @@ var (
 )
 
 func main() {
-	accountID := os.Getenv("ACOUNT_ID")
+	accountID := os.Getenv("ACCOUNT_ID")
 	mongoURI := "mongodb://localhost:27017"
 	clientOptions := options.Client().ApplyURI(mongoURI)
 	client, err := mongo.Connect(context.Background(), clientOptions)
