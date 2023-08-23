@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"os"
 
 	auth "github.com/LeeShan87/dynatrace-account-inventory/dynatrace"
 	"github.com/LeeShan87/dynatrace-account-inventory/generated/account"
@@ -11,29 +10,21 @@ import (
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
-)
-
-var (
-	apiURL = "https://api.dynatrace.com"
 )
 
 func main() {
-	accountID := os.Getenv("ACCOUNT_ID")
-	mongoURI := "mongodb://localhost:27017"
-	clientOptions := options.Client().ApplyURI(mongoURI)
-	client, err := mongo.Connect(context.Background(), clientOptions)
+	client, err := utils.ConnecToMongoDB()
 	utils.CheckError(err)
 	defer client.Disconnect(context.Background())
 
 	db := client.Database("account_api")
 
 	authClient := auth.NewDTAuthClient()
-	apiClient, err := auth.GetApiClient(*authClient, apiURL)
+	apiClient, err := auth.GetApiClient(*authClient, utils.ApiURL)
 	utils.CheckError(err)
 
 	// fetch tenants and management zones
-	environments, err := fetchEnvironments(apiClient, accountID)
+	environments, err := fetchEnvironments(apiClient, utils.AccountID)
 	utils.CheckError(err)
 	tenants, MZs, err := saveEnvironmentsInMongo(db, environments)
 	utils.CheckError(err)

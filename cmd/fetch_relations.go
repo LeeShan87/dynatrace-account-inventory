@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"os"
 
 	auth "github.com/LeeShan87/dynatrace-account-inventory/dynatrace"
 	"github.com/LeeShan87/dynatrace-account-inventory/generated/account"
@@ -12,25 +11,17 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
-)
-
-var (
-	apiURL = "https://api.dynatrace.com"
 )
 
 func main() {
-	accountID := os.Getenv("ACCOUNT_ID")
-	mongoURI := "mongodb://localhost:27017"
-	clientOptions := options.Client().ApplyURI(mongoURI)
-	client, err := mongo.Connect(context.Background(), clientOptions)
+	client, err := utils.ConnecToMongoDB()
 	utils.CheckError(err)
 	defer client.Disconnect(context.Background())
 
 	db := client.Database("account_api")
 
 	authClient := auth.NewDTAuthClient()
-	apiClient, err := auth.GetApiClient(*authClient, apiURL)
+	apiClient, err := auth.GetApiClient(*authClient, utils.ApiURL)
 	utils.CheckError(err)
 
 	users, err := fetchUsersInMongo(db)
@@ -41,7 +32,7 @@ func main() {
 		id := user.Uid
 		email := user.Email
 		fmt.Println("Fetching groups for user: ", id)
-		groups := getUserGroups(apiClient, accountID, email)
+		groups := getUserGroups(apiClient, utils.AccountID, email)
 		err = updateUserGroupsInMongo(db, id, groups)
 		utils.CheckError(err)
 	}
@@ -52,7 +43,7 @@ func main() {
 		// Fetch users in group
 		groupId := group.Uuid
 		fmt.Println("Fetching users for group: ", groupId)
-		users := getUsersInGroup(apiClient, accountID, *groupId)
+		users := getUsersInGroup(apiClient, utils.AccountID, *groupId)
 		err = updateGroupsUsersInMongo(db, *groupId, *users)
 		utils.CheckError(err)
 	}

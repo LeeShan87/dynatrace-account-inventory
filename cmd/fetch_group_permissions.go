@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"os"
 
 	auth "github.com/LeeShan87/dynatrace-account-inventory/dynatrace"
 	"github.com/LeeShan87/dynatrace-account-inventory/generated/account"
@@ -12,25 +11,16 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
-)
-
-var (
-	apiURL = "https://api.dynatrace.com"
 )
 
 func main() {
-	accountID := os.Getenv("ACOUNT_ID")
-	mongoURI := "mongodb://localhost:27017"
-	clientOptions := options.Client().ApplyURI(mongoURI)
-	client, err := mongo.Connect(context.Background(), clientOptions)
+	client, err := utils.ConnecToMongoDB()
 	utils.CheckError(err)
 	defer client.Disconnect(context.Background())
-
 	db := client.Database("account_api")
 
 	authClient := auth.NewDTAuthClient()
-	apiClient, err := auth.GetApiClient(*authClient, apiURL)
+	apiClient, err := auth.GetApiClient(*authClient, utils.ApiURL)
 	utils.CheckError(err)
 
 	// fetch permissions for groups
@@ -40,7 +30,7 @@ func main() {
 	for _, group := range groups {
 		groupID := group.Uuid
 		fmt.Println("Fetching permissions for group: ", groupID)
-		permissions, err := getPersmissionsForGroup(apiClient, accountID, *groupID)
+		permissions, err := getPersmissionsForGroup(apiClient, utils.AccountID, *groupID)
 		utils.CheckError(err)
 		err = saveGroupPermissionsInMongo(db, group, *permissions)
 		utils.CheckError(err)
