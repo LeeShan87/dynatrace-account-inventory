@@ -1,0 +1,108 @@
+# CredentialsDetailsCertificateResponseElement
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**Certificate** | Pointer to **string** | Base64 encoded certificate bytes | [optional] 
+**CertificateType** | Pointer to **string** | Certificate type: PEM, PKCS12 or UNKNOWN | [optional] 
+**Password** | Pointer to **string** | Base64 encoded password | [optional] 
+
+## Methods
+
+### NewCredentialsDetailsCertificateResponseElement
+
+`func NewCredentialsDetailsCertificateResponseElement() *CredentialsDetailsCertificateResponseElement`
+
+NewCredentialsDetailsCertificateResponseElement instantiates a new CredentialsDetailsCertificateResponseElement object
+This constructor will assign default values to properties that have it defined,
+and makes sure properties required by API are set, but the set of arguments
+will change when the set of required properties is changed
+
+### NewCredentialsDetailsCertificateResponseElementWithDefaults
+
+`func NewCredentialsDetailsCertificateResponseElementWithDefaults() *CredentialsDetailsCertificateResponseElement`
+
+NewCredentialsDetailsCertificateResponseElementWithDefaults instantiates a new CredentialsDetailsCertificateResponseElement object
+This constructor will only assign default values to properties that have it defined,
+but it doesn't guarantee that properties required by API are set
+
+### GetCertificate
+
+`func (o *CredentialsDetailsCertificateResponseElement) GetCertificate() string`
+
+GetCertificate returns the Certificate field if non-nil, zero value otherwise.
+
+### GetCertificateOk
+
+`func (o *CredentialsDetailsCertificateResponseElement) GetCertificateOk() (*string, bool)`
+
+GetCertificateOk returns a tuple with the Certificate field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCertificate
+
+`func (o *CredentialsDetailsCertificateResponseElement) SetCertificate(v string)`
+
+SetCertificate sets Certificate field to given value.
+
+### HasCertificate
+
+`func (o *CredentialsDetailsCertificateResponseElement) HasCertificate() bool`
+
+HasCertificate returns a boolean if a field has been set.
+
+### GetCertificateType
+
+`func (o *CredentialsDetailsCertificateResponseElement) GetCertificateType() string`
+
+GetCertificateType returns the CertificateType field if non-nil, zero value otherwise.
+
+### GetCertificateTypeOk
+
+`func (o *CredentialsDetailsCertificateResponseElement) GetCertificateTypeOk() (*string, bool)`
+
+GetCertificateTypeOk returns a tuple with the CertificateType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCertificateType
+
+`func (o *CredentialsDetailsCertificateResponseElement) SetCertificateType(v string)`
+
+SetCertificateType sets CertificateType field to given value.
+
+### HasCertificateType
+
+`func (o *CredentialsDetailsCertificateResponseElement) HasCertificateType() bool`
+
+HasCertificateType returns a boolean if a field has been set.
+
+### GetPassword
+
+`func (o *CredentialsDetailsCertificateResponseElement) GetPassword() string`
+
+GetPassword returns the Password field if non-nil, zero value otherwise.
+
+### GetPasswordOk
+
+`func (o *CredentialsDetailsCertificateResponseElement) GetPasswordOk() (*string, bool)`
+
+GetPasswordOk returns a tuple with the Password field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPassword
+
+`func (o *CredentialsDetailsCertificateResponseElement) SetPassword(v string)`
+
+SetPassword sets Password field to given value.
+
+### HasPassword
+
+`func (o *CredentialsDetailsCertificateResponseElement) HasPassword() bool`
+
+HasPassword returns a boolean if a field has been set.
+
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+
